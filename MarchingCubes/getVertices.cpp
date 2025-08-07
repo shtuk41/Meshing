@@ -1,6 +1,26 @@
 #include <vector>
 
+/*
+        6 ________67_________ 7
+       /|				     /|
+      / |                   / |
+     46 |                 57  | 
+    /   |                 /   |
+   /    26               /    |
+  /		|				/     37
+4 ______|___45________ 5      |
+|       |              |      |
+|       |              |      |
+|       2 ________23___|_____ 3
+|      /               |      /
+40    /                15    /
+|    20                |    31
+|   /                  |   /
+|  /                   |  /
+| /                    | /
+ 0 ________10_________ 1 
 
+ */
 std::vector<int> getVertices(const std::byte cellConfiguration)
 {
 	int cellConfig = static_cast<int>(cellConfiguration);
