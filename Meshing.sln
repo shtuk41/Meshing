@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MarchingCubes", "MarchingCubes\MarchingCubes.vcxproj", "{C1D966B9-AD9E-42DA-8B2D-47E650E9428E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MarchingCubes.Test", "MarchingCubes.Test\MarchingCubes.Test.vcxproj", "{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{C1D966B9-AD9E-42DA-8B2D-47E650E9428E}.Release|x64.Build.0 = Release|x64
 		{C1D966B9-AD9E-42DA-8B2D-47E650E9428E}.Release|x86.ActiveCfg = Release|Win32
 		{C1D966B9-AD9E-42DA-8B2D-47E650E9428E}.Release|x86.Build.0 = Release|Win32
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Debug|x64.ActiveCfg = Debug|x64
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Debug|x64.Build.0 = Debug|x64
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Debug|x86.ActiveCfg = Debug|Win32
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Debug|x86.Build.0 = Debug|Win32
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Release|x64.ActiveCfg = Release|x64
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Release|x64.Build.0 = Release|x64
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Release|x86.ActiveCfg = Release|Win32
+		{481BF6B7-1867-4AA2-94A7-C4AEE2E1268F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
