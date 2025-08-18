@@ -3,13 +3,41 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="shaders.cpp" />
+    <ClCompile Include="cube.cpp" />
+    <ClCompile Include="render_object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="camera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="render_object.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="shaders">
       <UniqueIdentifier>{da0c28c2-7602-4fd1-8a0e-d0524d54cc15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{1037402b-57e3-406a-9632-8dd94a386143}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="cube.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="cube.vert">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

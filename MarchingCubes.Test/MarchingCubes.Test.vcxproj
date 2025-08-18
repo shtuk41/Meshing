@@ -57,7 +57,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>$(SolutionDir)/MarchingCubes;$(SolutionDir)/ThirdParty/GLFW/include;$(SolutionDir)/ThirdParty/GL/include;$(SolutionDir)/ThirdParty/glm/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/MarchingCubes;$(SolutionDir)/ThirdParty/GLFW/include;$(SolutionDir)/ThirdParty/GL/include;$(SolutionDir)/ThirdParty/glm/include;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -90,7 +90,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)/MarchingCubes;$(SolutionDir)/ThirdParty/GLFW/include;$(SolutionDir)/ThirdParty/GL/include;$(SolutionDir)/ThirdParty/glm/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/MarchingCubes;$(SolutionDir)/ThirdParty/GLFW/include;$(SolutionDir)/ThirdParty/GL/include;$(SolutionDir)/ThirdParty/glm/include;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -102,9 +102,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="cube.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="render_object.h" />
+    <ClInclude Include="shaders.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="cube.cpp" />
+    <ClCompile Include="render_object.cpp" />
+    <ClCompile Include="shaders.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -119,6 +127,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="cube.frag" />
+    <None Include="cube.vert" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

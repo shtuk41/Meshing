@@ -1,6 +1,9 @@
 #include "pch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <camera.h>
+#include <cube.h>
 #include <MarchingCubes.h>
 
 static void glfw_error_callback(int error, const char* description)
@@ -111,11 +114,49 @@ protected:
 GLFWwindow* OpenGLTestFixture::g_window = nullptr;
 
 
-TEST_F(OpenGLTestFixture, TestName1) {
+TEST_F(OpenGLTestFixture, TestName1) 
+{
+    //glFrontFace(GL_CCW);
+    glEnable(GL_DEPTH_TEST);
+
+    Camera cameraGlobal(g_window);
+
+    Cube cube(200);
+    cube.Setup();
 
     while (!glfwWindowShouldClose(g_window)) 
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        int width, height;
+        glfwGetFramebufferSize(g_window, &width, &height);
+        glViewport(0, 0, width, height);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        //glEnable(GL_CULL_FACE);
+
+        glm::mat4 projection_matrix;
+        glm::mat4 view_matrix;
+
+        cameraGlobal.computeViewProjectionMatrices(false, false);
+        projection_matrix = cameraGlobal.getProjectionMatrix();
+        view_matrix = cameraGlobal.getViewMatrix();
+
+        glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 1000.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+        glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 1000.0f);
+        cube.UpdateModel(view);
+        cube.SetProjection(proj);
+
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glEnable(GL_BLEND);
+        //glFrontFace(GL_CW);
+        //glDisable(GL_CULL_FACE);
+
+        glUseProgram(cube.GetProgramId());
+
+        cube.UpdateModel(view);
+        cube.SetProjection(proj);
+        cube.Draw();
+
 
         // draw geometry here
         glfwSwapBuffers(g_window);
