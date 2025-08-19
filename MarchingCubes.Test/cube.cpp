@@ -4,9 +4,10 @@
 #include <cube.h>
 #include <shaders.h>
 
-Cube::Cube(float length, int cornersBits) : edgeLength(length), 
+Cube::Cube(float edgeLength, int cornersBits, std::vector<float> &data) : edgeLength(edgeLength),
                                         cornersBitArray(cornersBits),
-                                        numberOfCorners(0)
+                                        numberOfCorners(0),
+                                        meshData(data)
 {
 
 }
@@ -93,6 +94,16 @@ void Cube::Setup()
         cubeCornersPositionAttribute = glGetAttribLocation(program_id, "vPosition");
         glVertexAttribPointer(cubeCornersPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
         glEnableVertexAttribArray(cubeCornersPositionAttribute);
+
+        glGenVertexArrays(1, &meshArrayId);
+        glBindVertexArray(meshArrayId);
+
+        glGenBuffers(1, &meshBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, meshBuffer);
+        glBufferData(GL_ARRAY_BUFFER, meshData.size() * sizeof(float), meshData.data(), GL_STATIC_DRAW);
+        meshPositionAttribute = glGetAttribLocation(program_id, "vPosition");
+        glVertexAttribPointer(meshPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
+        glEnableVertexAttribArray(meshPositionAttribute);
     }
 
     
@@ -127,19 +138,25 @@ void Cube::Draw()
     glUniformMatrix4fv(model_view, 1, GL_FALSE, glm::value_ptr(model_view_matrix));
     glUniformMatrix4fv(projection, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
-    glm::vec3 cubeColor(1.0f,1.0f,0.0f);
-    glUniform3fv(color_vector, 1, glm::value_ptr(cubeColor));
+    glm::vec4 cubeColor(1.0f,1.0f,0.0f, 1.0);
+    glUniform4fv(color_vector, 1, glm::value_ptr(cubeColor));
 
     glBindVertexArray(edgeArrayId);
     glDrawArrays(GL_LINES, 0, 24);
 
     if (cornersBitArray > 0)
     {
-        glm::vec3 cornerColor(0.0f, 1.0f, 0.0f);
-        glUniform3fv(color_vector, 1, glm::value_ptr(cornerColor));
+        glm::vec4 cornerColor(0.0f, 1.0f, 0.0f, 1.0f);
+        glUniform4fv(color_vector, 1, glm::value_ptr(cornerColor));
 
         glBindVertexArray(cubeCornersArrayId);
         glDrawArrays(GL_TRIANGLES, 0, numberOfCorners * 6 * 3);
+
+        glm::vec4 meshColor(0.0f, 0.749f, 1.0f, 0.4f);
+        glUniform4fv(color_vector, 1, glm::value_ptr(meshColor));
+
+        glBindVertexArray(meshArrayId);
+        glDrawArrays(GL_TRIANGLES, 0, meshData.size());
     }
 }
 

@@ -1,8 +1,6 @@
 // MarchingCubes.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-#include <map>
 #include <MarchingCubes.h>
 
 std::array<float, 3> operator+(const std::array<float, 3>& f1, const std::array<float, 3>& f2)
@@ -50,6 +48,11 @@ std::array<float, 3> operator/(const std::array<float, 3>& f1, float d)
 /// <returns>mesh as an array of triangles</returns>
 mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned short>>& cell, std::pair<unsigned short, unsigned short>& innerRange)
 {
+	if (cell.size() != 8)
+	{
+		throw std::exception("cell must consist of 8 points");
+	}
+
 	mesh trianglesArray;
 
 	int count = 0;
@@ -57,8 +60,8 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 
 	for (const auto& c : cell)
 	{
-		//this is outter point
-		if (c.second < innerRange.first || c.second > innerRange.second)
+		//this is inner point
+		if (c.second >= innerRange.first && c.second <= innerRange.second)
 		{
 			cornerSet |= (1 << count);
 		}

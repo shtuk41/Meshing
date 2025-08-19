@@ -10,6 +10,7 @@ private:
 	float edgeLength;
 	int cornersBitArray;
 	int numberOfCorners;
+	std::vector<float> meshData;
 
 	GLuint edgeArrayId = -1;
 	GLuint edgeBuffer = -1;
@@ -22,6 +23,11 @@ private:
 	GLuint cubeCornersBuffer = -1;
 	GLint cubeCornersPositionAttribute = -1;
 
+	GLuint meshArrayId = -1;
+	GLuint meshBuffer = -1;
+	GLint meshPositionAttribute = -1;
+
+
 	glm::vec4* v4Edges;
 	glm::vec4* v4Triangles;
 
@@ -29,12 +35,11 @@ private:
 
 public:
 
-	Cube(float, int);
+	Cube(float, int, std::vector<float> &data);
 	~Cube();
 
-	void SetModelView(glm::mat4 mv);
 	void SetProjection(glm::mat4 p);
-	virtual void UpdateModel(const glm::mat4& cam_view);
-	virtual void Setup();
-	virtual void Draw();
+	virtual void UpdateModel(const glm::mat4& cam_view) override;
+	virtual void Setup() override;
+	virtual void Draw() override;
 };

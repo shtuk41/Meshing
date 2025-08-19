@@ -153,15 +153,42 @@ protected:
 GLFWwindow* OpenGLTestFixture::g_window = nullptr;
 
 
-TEST_F(OpenGLTestFixture, TestName1) 
+TEST_F(OpenGLTestFixture, Testb00000001) 
 {
-    //glFrontFace(GL_CCW);
+    float cubeEdgeLength = 200;
+    float half = cubeEdgeLength / 2;
+
+    std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+
+    cell.push_back({ {-half,-half, half}, 1500 });
+    cell.push_back({ {half,-half,half}, 0 });
+    cell.push_back({ {-half,-half,-half}, 0 });
+    cell.push_back({ {half,-half,-half}, 0 });
+    cell.push_back({ {-half,half,half}, 0 });
+    cell.push_back({ {half,half,half}, 0 });
+    cell.push_back({ {-half,half,-half}, 0 });
+    cell.push_back({ {half,half,-half}, 0 });
+
+    std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+    mesh m = getTriangles(cell, innerRange);
+
+    std::vector<std::array<std::array<float, 3>, 3>>;
+    std::vector<float> meshData;
+
+    for (const auto& t : m)
+    {
+        meshData.insert(meshData.end(), std::begin(t[0]), std::end(t[0]));
+        meshData.insert(meshData.end(), std::begin(t[1]), std::end(t[1]));
+        meshData.insert(meshData.end(), std::begin(t[2]), std::end(t[2]));
+    }
+
+    glFrontFace(GL_CCW);
     glEnable(GL_DEPTH_TEST);
 
     Camera cameraGlobal(g_window);
 
-
-    Cube cube(200, 0b00000000);
+    Cube cube(cubeEdgeLength, 0b00000001, meshData);
     cube.Setup();
 
     while (!glfwWindowShouldClose(g_window)) 
@@ -185,16 +212,10 @@ TEST_F(OpenGLTestFixture, TestName1)
         rotateX = 0.0;
         rotateY = 0.0;
 
-        //this is just for testing
-        //glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 500.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-        //glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 1000.0f);
-        //cube.UpdateModel(view);
-        //cube.SetProjection(proj);
-
-        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glEnable(GL_BLEND);
-        //glFrontFace(GL_CW);
-        //glDisable(GL_CULL_FACE);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
+        glFrontFace(GL_CW);
+        glDisable(GL_CULL_FACE);
 
         glUseProgram(cube.GetProgramId());
 
@@ -213,3 +234,4 @@ TEST_F(OpenGLTestFixture, TestName1)
   EXPECT_EQ(1, 1);
   EXPECT_TRUE(true);
 }
+
