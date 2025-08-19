@@ -161,7 +161,7 @@ TEST_F(OpenGLTestFixture, TestName1)
     Camera cameraGlobal(g_window);
 
 
-    Cube cube(200);
+    Cube cube(200, 0b00000000);
     cube.Setup();
 
     while (!glfwWindowShouldClose(g_window)) 
@@ -172,7 +172,7 @@ TEST_F(OpenGLTestFixture, TestName1)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
 
         glm::mat4 projection_matrix;
         glm::mat4 view_matrix;

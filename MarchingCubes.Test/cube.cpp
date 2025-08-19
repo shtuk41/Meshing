@@ -4,7 +4,9 @@
 #include <cube.h>
 #include <shaders.h>
 
-Cube::Cube(float length) : edgeLength(length)
+Cube::Cube(float length, int cornersBits) : edgeLength(length), 
+                                        cornersBitArray(cornersBits),
+                                        numberOfCorners(0)
 {
 
 }
@@ -17,6 +19,13 @@ Cube::~Cube()
 
     glDeleteBuffers(1, &edgeBuffer);
     glDeleteVertexArrays(1, &edgeArrayId);
+
+    if (cornersBitArray > 0)
+    {
+        glDeleteBuffers(1, &cubeCornersBuffer);
+        glDeleteVertexArrays(1, &cubeCornersArrayId);
+        glDisableVertexAttribArray(cubeCornersPositionAttribute);
+    }
 }
 
 void Cube::Setup()
@@ -70,9 +79,27 @@ void Cube::Setup()
     edgePositionAttribute = glGetAttribLocation(program_id, "vPosition");
     glVertexAttribPointer(edgePositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
     glEnableVertexAttribArray(edgePositionAttribute);
+
+    if (cornersBitArray > 0)
+    {
+        std::vector<float> cubeVertices = generateVertices(10);
+
+        glGenVertexArrays(1, &cubeCornersArrayId);
+        glBindVertexArray(cubeCornersArrayId);
+
+        glGenBuffers(1, &cubeCornersBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, cubeCornersBuffer);
+        glBufferData(GL_ARRAY_BUFFER, cubeVertices.size() * sizeof(float), cubeVertices.data(), GL_STATIC_DRAW);
+        cubeCornersPositionAttribute = glGetAttribLocation(program_id, "vPosition");
+        glVertexAttribPointer(cubeCornersPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
+        glEnableVertexAttribArray(cubeCornersPositionAttribute);
+    }
+
     
     model_view = glGetUniformLocation(program_id, "model_view");
     projection = glGetUniformLocation(program_id, "projection");
+
+    color_vector = glGetUniformLocation(program_id, "vColor");
 
     model_matrix = glm::mat4(1.0f);
 }
@@ -100,6 +127,107 @@ void Cube::Draw()
     glUniformMatrix4fv(model_view, 1, GL_FALSE, glm::value_ptr(model_view_matrix));
     glUniformMatrix4fv(projection, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
+    glm::vec3 cubeColor(1.0f,1.0f,0.0f);
+    glUniform3fv(color_vector, 1, glm::value_ptr(cubeColor));
+
     glBindVertexArray(edgeArrayId);
     glDrawArrays(GL_LINES, 0, 24);
+
+    if (cornersBitArray > 0)
+    {
+        glm::vec3 cornerColor(0.0f, 1.0f, 0.0f);
+        glUniform3fv(color_vector, 1, glm::value_ptr(cornerColor));
+
+        glBindVertexArray(cubeCornersArrayId);
+        glDrawArrays(GL_TRIANGLES, 0, numberOfCorners * 6 * 3);
+    }
+}
+
+void translate(float vertex[54], float t[3])
+{
+    for (int ii = 0; ii < 54; ii += 3)
+    {
+        vertex[ii] += t[0];
+        vertex[ii + 1] += t[1];
+        vertex[ii + 2] += t[2];
+    }
+}
+
+std::vector<float> Cube::generateVertices(float scale)
+{
+    std::vector<float> v;
+    float half = edgeLength / 2;
+
+    for (int ii = 0; ii < 8; ii++)
+    {
+        if ((cornersBitArray & (1 << ii)) != 0)
+        {
+            numberOfCorners++;
+            //vertex model, currently 4 side pyramid
+            float vertex[] = {
+                // side 1
+                0,  1,  0,   -1, -1,  1,    1, -1,  1,
+                // side 2
+                0,  1,  0,    1, -1,  1,    1, -1, -1,
+                // side 3
+                0,  1,  0,    1, -1, -1,   -1, -1, -1,
+                // side 4
+                0,  1,  0,    -1, -1, -1,   -1, -1, 1,
+                //base 1
+                -1,  -1,  1,    -1, -1, -1,   1, -1, -1,
+                //base 2
+                -1,  -1,  1,    1, -1, -1,   1, -1, 1,
+            };
+
+            for (int ii = 0; ii < 54; ii++)
+            {
+                vertex[ii] *= scale;
+            }
+
+            if (ii == 0)
+            {
+                float trans[3] = { -half, -half, half };
+                translate(vertex, trans);
+            }
+            else if (ii == 1)
+            {
+                float trans[3] = { half, -half, half };
+                translate(vertex, trans);
+            }
+            else if (ii == 2)
+            {
+                float trans[3] = { -half, -half, -half };
+                translate(vertex, trans);
+            }
+            else if (ii == 3)
+            {
+                float trans[3] = { half, -half, -half };
+                translate(vertex, trans);
+            }
+            else if (ii == 4)
+            {
+                float trans[3] = { -half, half, half };
+                translate(vertex, trans);
+            }
+            else if (ii == 5)
+            {
+                float trans[3] = { half, half, half };
+                translate(vertex, trans);
+            }
+            else if (ii == 6)
+            {
+                float trans[3] = { -half, half, -half };
+                translate(vertex, trans);
+            }
+            else if (ii == 7)
+            {
+                float trans[3] = { half, half, -half };
+                translate(vertex, trans);
+            }
+
+            v.insert(v.end(), std::begin(vertex), std::end(vertex));
+        }
+    }
+
+    return v;
 }

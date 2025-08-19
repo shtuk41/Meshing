@@ -9,6 +9,7 @@ protected:
 	GLuint program_id;
 	GLuint model_view;
 	GLuint projection;
+	GLuint color_vector;
 	glm::mat4 model_matrix;
 	glm::mat4 model_view_matrix;
 	glm::mat4 projection_matrix;
