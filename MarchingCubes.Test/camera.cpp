@@ -3,7 +3,7 @@
 
 Camera::Camera(GLFWwindow* w, float speed) : speed(speed), window(w)
 {
-	g_position = glm::vec3(0, 0, 2000.0F);
+	g_position = glm::vec3(0, 0, 500.0f);
 	g_initial_fov = glm::pi<float>() * 0.15f;
 	g_direction = glm::vec3(0.0f, 0.0f, -1.0f);
 	up = glm::vec3(0, 1, 0);
@@ -41,49 +41,16 @@ void Camera::setOffsetY(const float& offset)
 
 void Camera::computeViewProjectionMatrices(bool moveback, bool moveforward)
 {
-	static double last_time = glfwGetTime();
-
-	double current_time = glfwGetTime();
-	float delta_time = float(current_time - last_time);
-
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 
 	if (width <= 0 || height <= 0)
 		return;
 
-	glm::vec3 shiftLateral = glm::vec3(300.0f,0.0f,0.0f);
-
-	if (false && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-	{
-		float extraspeed = (moveback ? 250.0f : 100.0f);
-
-		g_position += g_direction * delta_time * speed * extraspeed;
-	}
-	else if (false && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-	{
-		float extraspeed = (moveforward ? 250.0f : 100.0f);
-
-		g_position -= g_direction * delta_time * speed * extraspeed;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS || moveback)
-	{
-		g_initial_fov -= 0.1f * delta_time * speed;
-		if (g_initial_fov < 0.01f)
-			g_initial_fov = 0.01f;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS || moveforward)
-	{
-		g_initial_fov += 0.1f * delta_time * speed;
-		if (g_initial_fov > 0.800f)
-			g_initial_fov = 0.800f;
-	}
-
-	g_projection_matrix = glm::perspective(g_initial_fov, (float)width / (float)height, 0.1f, 1000.0f);
+	g_projection_matrix = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 1000.0f);
 
 	//update the view matrix
 	g_view_matrix = glm::lookAt(g_position + g_position_offset_x + g_position_offset_y, g_position + g_position_offset_x + g_position_offset_y + g_direction, up);
-	last_time = current_time;
 }
 
 void Camera::computeViewProjectionMatrices(float fovyRadians)

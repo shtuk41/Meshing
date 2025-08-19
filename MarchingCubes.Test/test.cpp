@@ -6,6 +6,14 @@
 #include <cube.h>
 #include <MarchingCubes.h>
 
+//controls
+double previous_xpos = 0.0;
+double previous_ypos = 0.0;
+bool rotateEnable = false;
+double rotateX = 0.0;
+double rotateY = 0.0;
+
+
 static void glfw_error_callback(int error, const char* description)
 {
     std::cout << "Glfw Error " << error << " : " << description << "\n";
@@ -18,12 +26,43 @@ static void key_handle(GLFWwindow* window, int key, int scancode, int action, in
 
 static void mouse_handle(GLFWwindow* window, double xpos, double ypos)
 {
+    if (rotateEnable)
+    {
+        double delta_x = xpos - previous_xpos;
 
+        float ry = (float)(0.005f * delta_x);
+        rotateY += ry;
+
+        double delta_y = ypos - previous_ypos;
+
+        float rx = (float)(0.005f * delta_y);
+        rotateX += rx;
+
+        previous_xpos = xpos;
+        previous_ypos = ypos;
+    }
 }
 
 static void mouse_button_handle(GLFWwindow* window, int button, int action, int mods)
 {
+    if (button == GLFW_MOUSE_BUTTON_LEFT)
+    {
+        if (action == GLFW_PRESS)
+        {
+            double xpos, ypos;
 
+            glfwGetCursorPos(window, &xpos, &ypos);
+
+            previous_xpos = xpos;
+            previous_ypos = ypos;
+
+            rotateEnable = true;
+        }
+        else if (action == GLFW_RELEASE)
+        {
+            rotateEnable = false;
+        }
+    }
 }
 
 static void scroll_handle(GLFWwindow* window, double xoffset, double yoffset)
@@ -121,6 +160,7 @@ TEST_F(OpenGLTestFixture, TestName1)
 
     Camera cameraGlobal(g_window);
 
+
     Cube cube(200);
     cube.Setup();
 
@@ -137,14 +177,19 @@ TEST_F(OpenGLTestFixture, TestName1)
         glm::mat4 projection_matrix;
         glm::mat4 view_matrix;
 
+        cameraGlobal.rotateX(rotateX);
+        cameraGlobal.rotateY(rotateY);
         cameraGlobal.computeViewProjectionMatrices(false, false);
         projection_matrix = cameraGlobal.getProjectionMatrix();
         view_matrix = cameraGlobal.getViewMatrix();
+        rotateX = 0.0;
+        rotateY = 0.0;
 
-        glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 1000.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-        glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 1000.0f);
-        cube.UpdateModel(view);
-        cube.SetProjection(proj);
+        //this is just for testing
+        //glm::mat4 view = glm::lookAt(glm::vec3(0, 0, 500.0f), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+        //glm::mat4 proj = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 1000.0f);
+        //cube.UpdateModel(view);
+        //cube.SetProjection(proj);
 
         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         //glEnable(GL_BLEND);
@@ -153,8 +198,10 @@ TEST_F(OpenGLTestFixture, TestName1)
 
         glUseProgram(cube.GetProgramId());
 
-        cube.UpdateModel(view);
-        cube.SetProjection(proj);
+        //cube.UpdateModel(view);
+        //cube.SetProjection(proj);
+        cube.UpdateModel(view_matrix);
+        cube.SetProjection(projection_matrix);
         cube.Draw();
 
 
