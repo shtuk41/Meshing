@@ -166,7 +166,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b00100000://case 1
-		edges = { 15,75,57 };
+		edges = { 15,45,57 };
 		break;
 	case 0b00100001:
 		edges = {};

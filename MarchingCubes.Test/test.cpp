@@ -164,7 +164,7 @@ TEST_F(OpenGLTestFixture, TestCase1)
 
     int corner = 0;
 
-    while (true)
+    while (!glfwWindowShouldClose(g_window))
     {
         std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 
