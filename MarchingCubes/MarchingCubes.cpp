@@ -139,7 +139,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b00010111:
-		edges = {};
+		edges = {13,15,45,23,26,46,13,45,46,23,13,46};
 		break;
 	case 0b00011000:
 		edges = {13,37,23,46,45,40};
@@ -199,7 +199,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {45,10,23, 45,23,57,23,57,37};
 		break;
 	case 0b00101011:
-		edges = {};
+		edges = {40,45,20,23,37,57,20,23,57,20,57,45};
 		break;
 	case 0b00101100:
 		edges = {};
@@ -301,7 +301,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b01001101:
-		edges = {};
+		edges = {10,13,46,13,46,67,13,67,37,10,46,40};
 		break;
 	case 0b01001110:
 		edges = {};
@@ -409,7 +409,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {26,40,15,15,26,67,15,67,57};
 		break;
 	case 0b01110001:
-		edges = {};
+		edges = {15,57,10,26,67,20,20,57,67,10,57,20};
 		break;
 	case 0b01110010:
 		edges = {};
@@ -496,7 +496,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b10001110:
-		edges = {};
+		edges = {10,15,57,20,26,67,10,57,20,20,57,67};
 		break;
 	case 0b10001111:
 		edges = {};
@@ -604,7 +604,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b10110010:
-		edges = {};
+		edges = {46,40,10,67,37,13,10,46,67,10,13,67};
 		break;
 	case 0b10110011:
 		edges = {};
@@ -706,7 +706,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b11010100:
-		edges = {};
+		edges = {20,40,45,23,37,57,20,45,57,20,57,23};
 		break;
 	case 0b11010101:
 		edges = {};
@@ -766,7 +766,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {};
 		break;
 	case 0b11101000:
-		edges = {};
+		edges = {26,46,23,15,13,45,45,13,46,46,13,23};
 		break;
 	case 0b11101001:
 		edges = {};
