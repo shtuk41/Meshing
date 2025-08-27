@@ -156,6 +156,17 @@ protected:
 
 GLFWwindow* OpenGLTestFixture::g_window = nullptr;
 
+bool Check(int t, std::vector<int> set)
+{
+    for (auto s : set)
+    {
+        if (t == s)
+            return true;
+    }
+
+    return false;
+}
+
 
 TEST_F(OpenGLTestFixture, DISABLED_TestCase1)
 {
@@ -361,7 +372,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase2)
     }
 }
 
-TEST_F(OpenGLTestFixture, TestCase3)
+TEST_F(OpenGLTestFixture, DISABLED_TestCase3)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
@@ -667,6 +678,108 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
     }
 }
 
+TEST_F(OpenGLTestFixture, TestCase6)
+{
+    float cubeEdgeLength = 200;
+    float half = cubeEdgeLength / 2;
+
+    int triple = 0;
+
+    while (!glfwWindowShouldClose(g_window))
+    {
+        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1,6,7,10,12,18,22,23}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {0,1,2,3,13,14,16,17,21,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {4,5,6,7,8,11,17,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {2,3,4,5,9,15,18,19,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {2,4,8,9,14,15,19,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {5,6,8,9,10,11,16,17,20,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0,3,12,13,14,15,16,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {1,7,10,11,12,13,18,19,23}) ? 1500 : 0) });
+
+        std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+        int cornerSet{ 0 };
+
+        mesh m = getTriangles(cell, innerRange, cornerSet);
+
+        std::vector<std::array<std::array<float, 3>, 3>>;
+        std::vector<float> meshData;
+
+        for (const auto& t : m)
+        {
+            meshData.insert(meshData.end(), std::begin(t[0]), std::end(t[0]));
+            meshData.insert(meshData.end(), std::begin(t[1]), std::end(t[1]));
+            meshData.insert(meshData.end(), std::begin(t[2]), std::end(t[2]));
+        }
+
+        glFrontFace(GL_CCW);
+        glEnable(GL_DEPTH_TEST);
+
+        Camera cameraGlobal(g_window);
+
+        Cube cube(cubeEdgeLength, cornerSet, meshData);
+        cube.Setup();
+
+        while (!glfwWindowShouldClose(g_window))
+        {
+            int width, height;
+            glfwGetFramebufferSize(g_window, &width, &height);
+            glViewport(0, 0, width, height);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glEnable(GL_CULL_FACE);
+
+            glm::mat4 projection_matrix;
+            glm::mat4 view_matrix;
+
+            cameraGlobal.rotateX(rotateX);
+            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.computeViewProjectionMatrices(false, false);
+            projection_matrix = cameraGlobal.getProjectionMatrix();
+            view_matrix = cameraGlobal.getViewMatrix();
+            rotateX = 0.0;
+            rotateY = 0.0;
+
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glFrontFace(GL_CW);
+            glDisable(GL_CULL_FACE);
+
+            glUseProgram(cube.GetProgramId());
+
+            //cube.UpdateModel(view);
+            //cube.SetProjection(proj);
+            cube.UpdateModel(view_matrix);
+            cube.SetProjection(projection_matrix);
+            cube.Draw();
+
+
+            // draw geometry here
+            glfwSwapBuffers(g_window);
+            glfwPollEvents();
+
+            if (nextConfiguration)
+            {
+                triple++;
+                nextConfiguration = false;
+                break;
+            }
+        }
+
+        EXPECT_EQ(1, 1);
+        EXPECT_TRUE(true);
+
+        if (triple == 24)
+        {
+            glfwSetWindowShouldClose(g_window, GLFW_TRUE);
+            break;
+        }
+    }
+}
+
 TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
 {
     float cubeEdgeLength = 200;
@@ -864,6 +977,108 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase9)
         EXPECT_TRUE(true);
 
         if (quad == 8)
+        {
+            glfwSetWindowShouldClose(g_window, GLFW_TRUE);
+            break;
+        }
+    }
+}
+
+TEST_F(OpenGLTestFixture, DISABLED_TestCase10)
+{
+    float cubeEdgeLength = 200;
+    float half = cubeEdgeLength / 2;
+
+    int triple = 0;
+
+    while (!glfwWindowShouldClose(g_window))
+    {
+        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1,6,7,10,12,18,22,23}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {0,1,2,3,13,14,16,17,21,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {4,5,6,7,8,11,17,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {2,3,4,5,9,15,18,19,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {2,4,8,9,14,15,19,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {5,6,8,9,10,11,16,17,20,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0,3,12,13,14,15,16,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {1,7,10,11,12,13,18,19,23}) ? 1500 : 0) });
+
+        std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+        int cornerSet{ 0 };
+
+        mesh m = getTriangles(cell, innerRange, cornerSet);
+
+        std::vector<std::array<std::array<float, 3>, 3>>;
+        std::vector<float> meshData;
+
+        for (const auto& t : m)
+        {
+            meshData.insert(meshData.end(), std::begin(t[0]), std::end(t[0]));
+            meshData.insert(meshData.end(), std::begin(t[1]), std::end(t[1]));
+            meshData.insert(meshData.end(), std::begin(t[2]), std::end(t[2]));
+        }
+
+        glFrontFace(GL_CCW);
+        glEnable(GL_DEPTH_TEST);
+
+        Camera cameraGlobal(g_window);
+
+        Cube cube(cubeEdgeLength, cornerSet, meshData);
+        cube.Setup();
+
+        while (!glfwWindowShouldClose(g_window))
+        {
+            int width, height;
+            glfwGetFramebufferSize(g_window, &width, &height);
+            glViewport(0, 0, width, height);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glEnable(GL_CULL_FACE);
+
+            glm::mat4 projection_matrix;
+            glm::mat4 view_matrix;
+
+            cameraGlobal.rotateX(rotateX);
+            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.computeViewProjectionMatrices(false, false);
+            projection_matrix = cameraGlobal.getProjectionMatrix();
+            view_matrix = cameraGlobal.getViewMatrix();
+            rotateX = 0.0;
+            rotateY = 0.0;
+
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glFrontFace(GL_CW);
+            glDisable(GL_CULL_FACE);
+
+            glUseProgram(cube.GetProgramId());
+
+            //cube.UpdateModel(view);
+            //cube.SetProjection(proj);
+            cube.UpdateModel(view_matrix);
+            cube.SetProjection(projection_matrix);
+            cube.Draw();
+
+
+            // draw geometry here
+            glfwSwapBuffers(g_window);
+            glfwPollEvents();
+
+            if (nextConfiguration)
+            {
+                triple++;
+                nextConfiguration = false;
+                break;
+            }
+        }
+
+        EXPECT_EQ(1, 1);
+        EXPECT_TRUE(true);
+
+        if (triple == 24)
         {
             glfwSetWindowShouldClose(g_window, GLFW_TRUE);
             break;
