@@ -36,6 +36,9 @@ Starting with basic marching cubes and visualization for debugging and future de
 ## Case 11
 ![Screenshot](README/Case11.PNG)
 
+## Case 12
+![Screenshot](README/Case12.PNG)
+
 ## Case 13
 ![Screenshot](README/Case13.PNG)
 

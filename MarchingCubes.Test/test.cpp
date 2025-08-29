@@ -779,7 +779,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase6)
         }
     }
 }
-TEST_F(OpenGLTestFixture, TestCase7)
+TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
@@ -1207,6 +1207,109 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
         cell.push_back({ {half,half,half}, unsigned short(quad == 3 || quad == 5 || quad == 8 || quad == 9 || quad == 11 || quad == 13 || quad == 14 || quad == 15 || quad == 16 || quad == 19 || quad == 21 || quad == 22 ? 1500 : 0) });
         cell.push_back({ {-half,half,-half}, unsigned short(quad == 1 || quad == 7 || quad == 9 || quad == 10 || quad == 11 || quad == 12 || quad == 13 || quad == 15 || quad == 17 || quad == 18 || quad == 20 || quad == 23 ? 1500 : 0) });
         cell.push_back({ {half,half,-half}, unsigned short(quad == 0 || quad == 4 || quad == 8 || quad == 9 || quad == 10 || quad == 12 || quad == 13 || quad == 14 || quad == 16 || quad == 17 || quad == 20 || quad == 21 ? 1500 : 0) });
+
+        std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+        int cornerSet{ 0 };
+
+        mesh m = getTriangles(cell, innerRange, cornerSet);
+
+        std::vector<std::array<std::array<float, 3>, 3>>;
+        std::vector<float> meshData;
+
+        for (const auto& t : m)
+        {
+            meshData.insert(meshData.end(), std::begin(t[0]), std::end(t[0]));
+            meshData.insert(meshData.end(), std::begin(t[1]), std::end(t[1]));
+            meshData.insert(meshData.end(), std::begin(t[2]), std::end(t[2]));
+        }
+
+        glFrontFace(GL_CCW);
+        glEnable(GL_DEPTH_TEST);
+
+        Camera cameraGlobal(g_window);
+
+        Cube cube(cubeEdgeLength, cornerSet, meshData);
+        cube.Setup();
+
+        while (!glfwWindowShouldClose(g_window))
+        {
+            int width, height;
+            glfwGetFramebufferSize(g_window, &width, &height);
+            glViewport(0, 0, width, height);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glEnable(GL_CULL_FACE);
+
+            glm::mat4 projection_matrix;
+            glm::mat4 view_matrix;
+
+            cameraGlobal.rotateX(rotateX);
+            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.computeViewProjectionMatrices(false, false);
+            projection_matrix = cameraGlobal.getProjectionMatrix();
+            view_matrix = cameraGlobal.getViewMatrix();
+            rotateX = 0.0;
+            rotateY = 0.0;
+
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glFrontFace(GL_CW);
+            glDisable(GL_CULL_FACE);
+
+            glUseProgram(cube.GetProgramId());
+
+            //cube.UpdateModel(view);
+            //cube.SetProjection(proj);
+            cube.UpdateModel(view_matrix);
+            cube.SetProjection(projection_matrix);
+            cube.Draw();
+
+
+            // draw geometry here
+            glfwSwapBuffers(g_window);
+            glfwPollEvents();
+
+            if (nextConfiguration)
+            {
+                quad++;
+                nextConfiguration = false;
+                break;
+            }
+        }
+
+        EXPECT_EQ(1, 1);
+        EXPECT_TRUE(true);
+
+        if (quad == 24)
+        {
+            glfwSetWindowShouldClose(g_window, GLFW_TRUE);
+            break;
+        }
+    }
+}
+
+
+TEST_F(OpenGLTestFixture, TestCase12)
+{
+    float cubeEdgeLength = 200;
+    float half = cubeEdgeLength / 2;
+
+    int quad = 0;
+
+    while (!glfwWindowShouldClose(g_window))
+    {
+        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(quad, {0,  2,3,  5,        10,   12,13,   15,   17,      20,   22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(quad,   {0,1,  3,4,  6,7,  9,            14,         18,   20,21,   23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(quad, {  1,        6,  8,9,   11,12,13,14,   16,            21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(quad,  {    2,  4,5,  7,8,  10,11,         15,         19,20,21,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(quad,   {  1,2,3,4,             11,12,   14,15,16,   18,19,   21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(quad,    {0,1,2,    5,6,7,8,           13,      16,17,   19,      22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(quad,  {0,            7,8,9,10,      13,14,15,   17,18,19,20}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(quad,   {      3,4,5,6,    9,10,11,12,         16,17,18,            23}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
