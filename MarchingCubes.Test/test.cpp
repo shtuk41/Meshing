@@ -587,14 +587,14 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
     {
         std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(pair == 0 || pair == 2 || pair == 3 || pair == 8 || pair == 10 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(pair == 0 || pair == 1 || pair == 3 || pair == 12 || pair == 14 || pair == 15 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(pair == 1 || pair == 2 || pair == 3 || pair == 8 || pair == 9 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(pair == 0 || pair == 1 || pair == 2 || pair == 12 || pair == 13 || pair == 15 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(pair == 4 || pair == 6 || pair == 7 || pair == 9 || pair == 10 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(pair == 4 || pair == 5 || pair == 7 || pair == 13 || pair == 14 || pair == 15 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(pair == 5 || pair == 6 || pair == 7 || pair == 8 || pair == 9 || pair == 10 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(pair == 4 || pair == 5 || pair == 6 || pair == 12 || pair == 13 || pair == 14 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair,{0, 2, 3, 8, 10, 11,16,17,19,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(pair, {0,1,3,12,14,15,16,17,18,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair,{1,2,3,8,9,11,20,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,{0,1,2,12,13,15,20,21,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,{4,6,7,9,10,11,16,18,19,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(pair,{4,5,7,13,14,15,17,18,19,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,{5,6,7,8,9,10,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,{4,5,6,12,13,14,20,21,22,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -670,7 +670,109 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
         EXPECT_EQ(1, 1);
         EXPECT_TRUE(true);
 
-        if (pair == 16)
+        if (pair == 24)
+        {
+            glfwSetWindowShouldClose(g_window, GLFW_TRUE);
+            break;
+        }
+    }
+}
+
+TEST_F(OpenGLTestFixture, TestInvertedCase5)
+{
+    float cubeEdgeLength = 200;
+    float half = cubeEdgeLength / 2;
+
+    int pair = 0;
+
+    while (!glfwWindowShouldClose(g_window))
+    {
+        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair,{        4,5,6,7,0,8,9,10,11,12,         16,         20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(pair, {         1,5,      8,9,10,11,12,13,14,15,   17,      20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair,{1,2,3,  4,5,6,7,0,8,           13,            18,   20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,{ 1,2,3,  4,  6,      9,      12,13,14,15,         19,20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,{      3,    5,6,7,0,8,9,10,11,      14,   16,17,18,19,20}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(pair,{       2,        7,  8,9,10,11,12,13,14,15,16,17,18,19,   21}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,{ 1,2,3,  4,5,6,7,0,    10,            15,16,17,18,19,      22}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,{  1,2,3,  4,      0,       11,12,13,14,15,16,17,18,19,         23}) ? 1500 : 0) });
+
+        std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+        int cornerSet{ 0 };
+
+        mesh m = getTriangles(cell, innerRange, cornerSet);
+
+        std::vector<std::array<std::array<float, 3>, 3>>;
+        std::vector<float> meshData;
+
+        for (const auto& t : m)
+        {
+            meshData.insert(meshData.end(), std::begin(t[0]), std::end(t[0]));
+            meshData.insert(meshData.end(), std::begin(t[1]), std::end(t[1]));
+            meshData.insert(meshData.end(), std::begin(t[2]), std::end(t[2]));
+        }
+
+        glFrontFace(GL_CCW);
+        glEnable(GL_DEPTH_TEST);
+
+        Camera cameraGlobal(g_window);
+
+        Cube cube(cubeEdgeLength, cornerSet, meshData);
+        cube.Setup();
+
+        while (!glfwWindowShouldClose(g_window))
+        {
+            int width, height;
+            glfwGetFramebufferSize(g_window, &width, &height);
+            glViewport(0, 0, width, height);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            glEnable(GL_CULL_FACE);
+
+            glm::mat4 projection_matrix;
+            glm::mat4 view_matrix;
+
+            cameraGlobal.rotateX(rotateX);
+            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.computeViewProjectionMatrices(false, false);
+            projection_matrix = cameraGlobal.getProjectionMatrix();
+            view_matrix = cameraGlobal.getViewMatrix();
+            rotateX = 0.0;
+            rotateY = 0.0;
+
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glFrontFace(GL_CW);
+            glDisable(GL_CULL_FACE);
+
+            glUseProgram(cube.GetProgramId());
+
+            //cube.UpdateModel(view);
+            //cube.SetProjection(proj);
+            cube.UpdateModel(view_matrix);
+            cube.SetProjection(projection_matrix);
+            cube.Draw();
+
+
+            // draw geometry here
+            glfwSwapBuffers(g_window);
+            glfwPollEvents();
+
+            if (nextConfiguration)
+            {
+                pair++;
+                nextConfiguration = false;
+                break;
+            }
+        }
+
+        EXPECT_EQ(1, 1);
+        EXPECT_TRUE(true);
+
+        if (pair == 24)
         {
             glfwSetWindowShouldClose(g_window, GLFW_TRUE);
             break;
@@ -790,12 +892,12 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
     {
         std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1,7,}) ? 1500 : 0) });
         cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {2,4,5,}) ? 1500 : 0) });
         cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {3,4,5,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {0,6,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {0,6,7,}) ? 1500 : 0) });
         cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {2,3,5,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {1,6,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {1,6,7,}) ? 1500 : 0) });
         cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0,1,6,}) ? 1500 : 0) });
         cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {2,3,4,}) ? 1500 : 0) });
 
@@ -873,7 +975,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
         EXPECT_EQ(1, 1);
         EXPECT_TRUE(true);
 
-        if (triple == 7)
+        if (triple == 8)
         {
             glfwSetWindowShouldClose(g_window, GLFW_TRUE);
             break;
@@ -893,14 +995,14 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
     {
         std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(quad == 0 || quad == 2 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(quad == 0 || quad == 3 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(quad == 0 || quad == 2 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(quad == 0 || quad == 3 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(quad == 1 || quad == 2 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(quad == 1 || quad == 3 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(quad == 1 || quad == 2 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(quad == 1 || quad == 3 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, unsigned short(Check(quad,{0, 2,  4}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, unsigned short(Check(quad,  {0,   3,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, unsigned short(Check(quad,{0, 2,    5}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, unsigned short(Check(quad, {0,   3,  5}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, unsigned short(Check(quad,  {1, 2,  4}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, unsigned short(Check(quad,   {1,   3,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, unsigned short(Check(quad, {1, 2,    5}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, unsigned short(Check(quad,  {1,   3,  5}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -976,7 +1078,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
         EXPECT_EQ(1, 1);
         EXPECT_TRUE(true);
 
-        if (quad == 4)
+        if (quad == 6)
         {
             glfwSetWindowShouldClose(g_window, GLFW_TRUE);
             break;
@@ -1291,7 +1393,7 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
 }
 
 
-TEST_F(OpenGLTestFixture, TestCase12)
+TEST_F(OpenGLTestFixture, DISABLED_TestCase12)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
