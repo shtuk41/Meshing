@@ -9,6 +9,9 @@ Starting with basic marching cubes and visualization for debugging and future de
 ## Case 2
 ![Screenshot](README/Case2.PNG)
 
+## Inversed Case 2
+![Screenshot](README/Inverted_Case2.PNG)
+
 ## Case 3
 ![Screenshot](README/Case3.PNG)
 
