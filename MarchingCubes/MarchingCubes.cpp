@@ -391,13 +391,13 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = { 46,67,26,45,10,23,45,23,37,45,37,57, };
 		break;
 	case 0b01101011:
-		edges = {};
+		edges = { 46,45,40,67,57,37,26,23,20 };
 		break;
 	case 0b01101100:
 		edges = {45,57,15,13,20,46,13,46,67,13,67,37,};
 		break;
 	case 0b01101101:
-		edges = {};
+		edges = { 67,57,37,46,45,40,15,13,10 };
 		break;
 	case 0b01101110:
 		edges = { 46,45,10,46,10,20,67,57,37 };
@@ -433,7 +433,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {23,13,37,26,40,15,26,15,57,26,57,67,};
 		break;
 	case 0b01111001:
-		edges = {};
+		edges = { 67,57,37,26,23,20,15,13,10 };
 		break;
 	case 0b01111010:
 		edges = { 40,10,23,40,23,26,67,57,37 };
@@ -523,7 +523,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {46,45,40,67,57,37,26,23,20,10,15,13};
 		break;
 	case 0b10010111:
-		edges = {};
+		edges = { 46,67,26,45,57,15,37,13,23 };
 		break;
 	case 0b10011000:
 		edges = {67,57,13,67,13,23,46,45,40};
@@ -544,7 +544,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = { 45,57,13,45,13,10,46,67,26 };
 		break;
 	case 0b10011110:
-		edges = {};
+		edges = { 67,46,26,57,45,15,40,20,10 };
 		break;
 	case 0b10011111:
 		edges = {};
@@ -616,7 +616,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = { 10,15,37,10,37,23,46,67,26 };
 		break;
 	case 0b10110110:
-		edges = {};
+		edges = { 40,20,10,37,23,13,46,67,26 };
 		break;
 	case 0b10110111:
 		edges = {};
@@ -712,7 +712,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = { 45,10,23, 45,23,57,23,57,37 };
 		break;
 	case 0b11010110:
-		edges = {};
+		edges = { 40,20,10,23,37,13,45,57,15, };
 		break;
 	case 0b11010111:
 		edges = {};
@@ -769,7 +769,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		edges = {26,46,23,15,13,45,45,13,46,46,13,23};
 		break;
 	case 0b11101001:
-		edges = {};
+		edges = { 46,45,40,10,15,13,26,20,23 };
 		break;
 	case 0b11101010:
 		edges = { 10,23,45,23,45,26,45,26,46 };
