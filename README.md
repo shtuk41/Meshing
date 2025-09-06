@@ -21,6 +21,9 @@ Starting with basic marching cubes and visualization for debugging and future de
 ## Case 4
 ![Screenshot](README/Case4.PNG)
 
+## Inverted Case 4
+![Screenshot](README/Inverted_Case4.PNG)
+
 ## Case 5
 ![Screenshot](README/Case5.PNG)
 
