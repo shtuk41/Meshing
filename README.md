@@ -7,43 +7,43 @@ Starting with basic marching cubes and visualization for debugging and future de
 ![Screenshot](README/Case1.PNG)
 
 ## Inversed Case 1
-![Screenshot](README/Inverted_Case1.PNG)
+![Screenshot](README/Inverted_Case1.png)
 
 ## Case 2
 ![Screenshot](README/Case2.PNG)
 
 ## Inversed Case 2
-![Screenshot](README/Inverted_Case2.PNG)
+![Screenshot](README/Inverted_Case2.png)
 
 ## Case 3
 ![Screenshot](README/Case3.PNG)
 
 ## Inversed Case 3
-![Screenshot](README/Inverted_Case3.PNG)
+![Screenshot](README/Inverted_Case3.png)
 
 ## Case 4
 ![Screenshot](README/Case4.PNG)
 
 ## Inverted Case 4
-![Screenshot](README/Inverted_Case4.PNG)
+![Screenshot](README/Inverted_Case4.png)
 
 ## Case 5
 ![Screenshot](README/Case5.PNG)
 
 ## Inverted Case 5
-![Screenshot](README/Inverted_Case5.PNG)
+![Screenshot](README/Inverted_Case5.png)
 
 ## Case 6
 ![Screenshot](README/Case6.PNG)
 
 ## Inverted Case 6
-![Screenshot](README/Inverted_Case6.PNG)
+![Screenshot](README/Inverted_Case6.png)
 
 ## Case 7
 ![Screenshot](README/Case7.PNG)
 
 ## Inverted Case 7
-![Screenshot](README/Inverted_Case7.PNG)
+![Screenshot](README/Inverted_Case7.png)
 
 ## Case 8
 ![Screenshot](README/Case8.PNG)
