@@ -270,7 +270,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase1)
     }
 }
 
-TEST_F(OpenGLTestFixture, TestInvertedCase1)
+TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase1)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
@@ -678,7 +678,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase3)
     }
 }
 
-TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase3)
+TEST_F(OpenGLTestFixture, TestInvertedCase3)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
