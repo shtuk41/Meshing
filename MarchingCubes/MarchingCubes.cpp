@@ -135,7 +135,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00010101://case 5
  		edges = {10,23,45,23,45,26,45,26,46};
 		break;
-	case 0b00010110:
+	case 0b00010110://case 7
 		edges = {46,45,40,10,15,13,26,20,23};
 		break;
 	case 0b00010111:
@@ -144,16 +144,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00011000:// case 4
 		edges = {13,37,23,46,45,40};
 		break;
-	case 0b00011001:
+	case 0b00011001:// case 6
 		edges = {46,45,10,46,10,20,23,37,13};
 		break;
-	case 0b00011010:
+	case 0b00011010://case 6
 		edges = { 10,15,37,10,37,23,46,45,40 };
 		break;
 	case 0b00011011:
 		edges = {23,37,15,23,15,46,23,46,20,15,45,46};
 		break;
-	case 0b00011100:
+	case 0b00011100://case 6
 		edges = {26,37,13,13,26,20,46,45,40};
 		break;
 	case 0b00011101:
@@ -180,10 +180,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00100100:// case 4
 		edges = {26,20,23,45,57,15};
 		break;
-	case 0b00100101:
+	case 0b00100101:// case6
 		edges = {40,10,23,40,23,26,45,57,15};
 		break;
-	case 0b00100110:
+	case 0b00100110:// case 6
 		edges = {45,57,13,45,13,10,20,23,26};
 		break;
 	case 0b00100111:
@@ -192,7 +192,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00101000://case 3
 		edges = { 45,57,15,13,37,23 };
 		break;
-	case 0b00101001:
+	case 0b00101001://case 7
 		edges = {40,20,10,23,37,13,45,57,15,};
 		break;
 	case 0b00101010://case 5
@@ -201,7 +201,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00101011:
 		edges = {40,45,20,23,37,57,20,23,57,20,57,45};
 		break;
-	case 0b00101100:
+	case 0b00101100://case 6
 		edges = {26,37,13,13,26,20,45,57,15};
 		break;
 	case 0b00101101:
@@ -225,7 +225,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00110011:
 		edges = {46,20,13,46,13,57,};
 		break;
-	case 0b00110100:
+	case 0b00110100://case 6
 		edges = {46,40,15,46,15,57,26,20,23};
 		break;
 	case 0b00110101:
@@ -237,7 +237,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00110111://inverted case 5
 		edges = { 13,57,46,13,46,26,13,26,23, };
 		break;
-	case 0b00111000:
+	case 0b00111000://case 6
 		edges = {46,40,15,46,15,57,37,23,13};
 		break;
 	case 0b00111001:
@@ -252,10 +252,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00111100:
 		edges = {46,57,15,46,15,40,26,37,13,26,13,20};
 		break;
-	case 0b00111101:
+	case 0b00111101://inverted case 6
 		edges = { 46,26,37,46,37,57,10,15,13 };
 		break;
-	case 0b00111110:
+	case 0b00111110://inverted case 6
 		edges = { 46,26,37,46,37,57,20,40,10 };
 		break;
 	case 0b00111111://inverted case 2
@@ -270,7 +270,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01000010://case 4
 		edges = {10,15,13,46,67,26};
 		break;
-	case 0b01000011:
+	case 0b01000011://case 6
 		edges = { 40,15,13,13,40,20,46,67,26};
 		break;
 	case 0b01000100://case 2
@@ -279,7 +279,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01000101://case 5
 		edges = {10,23,67,10,67,46,10,46,40};
 		break;
-	case 0b01000110:
+	case 0b01000110://case 6
 		edges = {46,67,23,46,23,20,10,15,13};
 		break;
 	case 0b01000111:
@@ -288,10 +288,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01001000://case 3
 		edges = {46,67,26,37,13,23};
 		break;
-	case 0b01001001:
+	case 0b01001001://case 7
 		edges = {40,20,10,37,23,13,46,67,26};
 		break;
-	case 0b01001010:
+	case 0b01001010://case 6
 		edges = { 10,15,37,10,37,23,46,67,26 };
 		break;
 	case 0b01001011:
@@ -315,7 +315,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01010001://case 5
 		edges = {10,67,45,10,67,26,10,26,20};
 		break;
-	case 0b01010010:
+	case 0b01010010://case 6
 		edges = {40,45,67,40,67,26,10,15,13};
 		break;
 	case 0b01010011:
@@ -333,7 +333,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01010111://inverted case 5
 		edges = { 23,67,45,23,45,15,23,15,13 };
 		break;
-	case 0b01011000:
+	case 0b01011000://case 6
 		edges = {40,45,67,40,67,26,13,37,23};
 		break;
 	case 0b01011001:
@@ -342,7 +342,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01011010:
 		edges = {45,67,26,45,26,40,10,23,37,10,37,15};
 		break;
-	case 0b01011011:
+	case 0b01011011://inverted case 6
 		edges = { 45,15,37,45,37,67,26,23,20 };
 		break;
 	case 0b01011100:
@@ -351,7 +351,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01011101://inverted case 5
 		edges = { 67,45,10,10,67,13,67,13,37 };
 		break;
-	case 0b01011110:
+	case 0b01011110://inverted case 6
 		edges = { 45,15,37,45,37,67,40,20,10 };
 		break;
 	case 0b01011111://inverted case 2
@@ -360,16 +360,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01100000: //case 3
 		edges = {46,67,26,45,57,15};
 		break;
-	case 0b01100001:
+	case 0b01100001://case 7
 		edges = {67,46,26,57,45,15,40,20,10,};
 		break;
-	case 0b01100010:
+	case 0b01100010://case 6
 		edges = {45,57,13,45,13,10,46,67,26};
 		break;
 	case 0b01100011:
 		edges = {46,67,26,20,13,57,20,57,45,20,45,40,};
 		break;
-	case 0b01100100:
+	case 0b01100100://case 6
 		edges = {46,67,23,46,23,20,45,57,15};
 		break;
 	case 0b01100101:
@@ -378,10 +378,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01100110:
 		edges = {46,67,23,46,23,20,45,57,13,45,13,10};
 		break;
-	case 0b01100111:
+	case 0b01100111://inverted case 6
 		edges = { 67,57,13,67,13,23,46,45,40 };
 		break;
-	case 0b01101000:
+	case 0b01101000://case 7
 		edges = {46,67,26,45,57,15,37,13,23};
 		break;
 	case 0b01101001:
@@ -390,16 +390,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01101010:
 		edges = { 46,67,26,45,10,23,45,23,37,45,37,57, };
 		break;
-	case 0b01101011:
+	case 0b01101011://inverted case 7
 		edges = { 46,45,40,67,57,37,26,23,20 };
 		break;
 	case 0b01101100:
 		edges = {45,57,15,13,20,46,13,46,67,13,67,37,};
 		break;
-	case 0b01101101:
+	case 0b01101101://inverted case 7
 		edges = { 67,57,37,46,45,40,15,13,10 };
 		break;
-	case 0b01101110:
+	case 0b01101110://inverted case 6
 		edges = { 46,45,10,46,10,20,67,57,37 };
 		break;
 	case 0b01101111://inverted case 3
@@ -423,7 +423,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01110101://inverted case 5
 		edges = { 10,23,67,10,67,57,10,57,15 };
 		break;
-	case 0b01110110:
+	case 0b01110110://inverted case 6
 		edges = { 67,57,13,67,13,23,40,20,10 };
 		break;
 	case 0b01110111://inverted case 2
@@ -432,16 +432,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01111000:
 		edges = {23,13,37,26,40,15,26,15,57,26,57,67,};
 		break;
-	case 0b01111001:
+	case 0b01111001://inverted case 7
 		edges = { 67,57,37,26,23,20,15,13,10 };
 		break;
-	case 0b01111010:
+	case 0b01111010://inverted case 6
 		edges = { 40,10,23,40,23,26,67,57,37 };
 		break;
 	case 0b01111011://inverted case 3
 		edges = { 67,57,37,26,20,23 };
 		break;
-	case 0b01111100:
+	case 0b01111100://inverted case 6
 		edges = { 40,15,13,13,40,20,67,57,37 };
 		break;
 	case 0b01111101://inverted case 3
@@ -462,16 +462,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10000010://case 3
 		edges = {67,57,37,15,10,13};
 		break;
-	case 0b10000011:
+	case 0b10000011://case 6
 		edges = {40,15,13,13,40,20,67,57,37};
 		break;
 	case 0b10000100://case 3
 		edges = {67,57,37,26,20,23};
 		break;
-	case 0b10000101:
+	case 0b10000101://case 6
 		edges = {40,10,23,40,23,26,67,57,37};
 		break;
-	case 0b10000110:
+	case 0b10000110://case 7
 		edges = {67,57,37,26,23,20,15,13,10};
 		break;
 	case 0b10000111:
@@ -480,7 +480,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10001000://case 2
 		edges = {13, 57, 67, 13, 67, 23};
 		break;
-	case 0b10001001:
+	case 0b10001001:// case 6
 		edges = {67,57,13,67,13,23,40,20,10};
 		break;
 	case 0b10001010://case 5
@@ -504,16 +504,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10010000:// case 3
 		edges = {46,45,40,67,57,37};
 		break;
-	case 0b10010001:
+	case 0b10010001://case 6
 		edges = {46,45,10,46,10,20,67,57,37};
 		break;
-	case 0b10010010:
+	case 0b10010010://case 7
 		edges = {67,57,37,46,45,40,15,13,10};
 		break;
 	case 0b10010011:
 		edges = {67,57,37,46,20,13,46,13,15,46,15,45};
 		break;
-	case 0b10010100:
+	case 0b10010100://case 7
 		edges = {46,45,40,67,57,37,26,23,20};
 		break;
 	case 0b10010101:
@@ -522,10 +522,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10010110:
 		edges = {46,45,40,67,57,37,26,23,20,10,15,13};
 		break;
-	case 0b10010111:
+	case 0b10010111://inverted case 7
 		edges = { 46,67,26,45,57,15,37,13,23 };
 		break;
-	case 0b10011000:
+	case 0b10011000://case 6
 		edges = {67,57,13,67,13,23,46,45,40};
 		break;
 	case 0b10011001:
@@ -534,16 +534,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10011010:
 		edges = {46,45,40,10,23,67,10,67,57,10,57,15};
 		break;
-	case 0b10011011:
+	case 0b10011011://inverted case 6
 		edges = { 46,67,23,46,23,20,45,57,15 };
 		break;
 	case 0b10011100:
 		edges = {46,45,40,20,13,57,20,57,67,20,67,26,};
 		break;
-	case 0b10011101:
+	case 0b10011101://inverted case 6
 		edges = { 45,57,13,45,13,10,46,67,26 };
 		break;
-	case 0b10011110:
+	case 0b10011110://inverted case 7
 		edges = { 67,46,26,57,45,15,40,20,10 };
 		break;
 	case 0b10011111://inverted case 3
@@ -552,7 +552,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10100000://case 2
 		edges = {15, 37, 67, 15, 67, 45};
 		break;
-	case 0b10100001:
+	case 0b10100001://case 6
 		edges = {45,15,37,45,37,67,40,20,10};
 		break;
 	case 0b10100010:// case 5
@@ -561,7 +561,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10100011:
 		edges = {40,20,13,40,13,67,13,67,37,40,67,45};
 		break;
-	case 0b10100100:
+	case 0b10100100://case 6
 		edges = {45,15,37,45,37,67,26,23,20};
 		break;
 	case 0b10100101:
@@ -570,7 +570,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10100110:
 		edges = {20,23,26,67,45,10,67,10,13,67,13,37};
 		break;
-	case 0b10100111:
+	case 0b10100111://inverted case 6
 		edges = { 40,45,67,40,67,26,13,37,23 };
 		break;
 	case 0b10101000:// case 5
@@ -588,7 +588,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10101100:
 		edges = {15,67,45,15,67,20,67,20,26,15,20,13};
 		break;
-	case 0b10101101:
+	case 0b10101101://inverted case 6
 		edges = { 40,45,67,40,67,26,10,15,13 };
 		break;
 	case 0b10101110://inverted case 5
@@ -612,10 +612,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10110100:
 		edges = {26,20,23,40,15,37,40,37,67,40,67,46};
 		break;
-	case 0b10110101:
+	case 0b10110101://inverted case 6
 		edges = { 10,15,37,10,37,23,46,67,26 };
 		break;
-	case 0b10110110:
+	case 0b10110110://inverted case 7
 		edges = { 40,20,10,37,23,13,46,67,26 };
 		break;
 	case 0b10110111://inverted case 3
@@ -624,7 +624,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10111000:
 		edges = {46,40,15,46,15,23,15,23,13,46,67,23};
 		break;
-	case 0b10111001:
+	case 0b10111001://inverted case 6
 		edges = { 46,67,23,46,23,20,10,15,13 };
 		break;
 	case 0b10111010://inverted case 5
@@ -633,7 +633,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10111011://inverted case 2
 		edges = { 20, 23, 67, 20, 67, 46 };
 		break;
-	case 0b10111100:
+	case 0b10111100://inverted case 6
 		edges = { 40,15,13,13,40,20,46,67,26 };
 		break;
 	case 0b10111101://inverted case 4
@@ -648,10 +648,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11000000://case 2
 		edges = {26,46,57,57,37,26};
 		break;
-	case 0b11000001:
+	case 0b11000001://case 6
 		edges = {46,26,37,46,37,57,20,40,10};
 		break;
-	case 0b11000010:
+	case 0b11000010://case 6
 		edges = {46,26,37,46,37,57,10,15,13};
 		break;
 	case 0b11000011:
@@ -666,7 +666,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11000110:
 		edges = {10,15,13,20,46,57,20,57,37,20,37,23,};
 		break;
-	case 0b11000111:
+	case 0b11000111://inverted case 6
 		edges = { 46,40,15,46,15,57,37,23,13 };
 		break;
 	case 0b11001000://case 5
@@ -678,7 +678,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11001010:
 		edges = {15,10,23,15,23,46,15,46,57,23,46,26};
 		break;
-	case 0b11001011:
+	case 0b11001011://inverted case 6
 		edges = { 46,40,15,46,15,57,26,20,23 };
 		break;
 	case 0b11001100:
@@ -702,7 +702,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11010010:
 		edges = {10,13,15,37,26,40,37,40,45,37,45,57,};
 		break;
-	case 0b11010011:
+	case 0b11010011://inverted case 6
 		edges = { 26,37,13,13,26,20,45,57,15 };
 		break;
 	case 0b11010100:
@@ -711,7 +711,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11010101://inverted case 5
 		edges = { 45,10,23, 45,23,57,23,57,37 };
 		break;
-	case 0b11010110:
+	case 0b11010110://inverted case 7
 		edges = { 40,20,10,23,37,13,45,57,15, };
 		break;
 	case 0b11010111://inverted case 3
@@ -720,10 +720,10 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11011000:
 		edges = {45,40,26,45,26,13,45,57,13,26,23,13};
 		break;
-	case 0b11011001:
+	case 0b11011001://inverted case 6
 		edges = { 45,57,13,45,13,10,20,23,26 };
 		break;
-	case 0b11011010:
+	case 0b11011010://inverted case 6
 		edges = { 40,10,23,40,23,26,45,57,15 };
 		break;
 	case 0b11011011://inverted case 4
@@ -750,16 +750,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11100010:
 		edges = {46,26,37,46,37,10,37,13,10,46,45,10};
 		break;
-	case 0b11100011:
+	case 0b11100011://inverted case 6
 		edges = { 26,37,13,13,26,20,46,45,40 };
 		break;
 	case 0b11100100:
 		edges = {45,15,37,45,37,20,45,20,46,37,20,23};
 		break;
-	case 0b11100101:
+	case 0b11100101://inverted case 6
 		edges = { 10,15,37,10,37,23,46,45,40 };
 		break;
-	case 0b11100110:
+	case 0b11100110://inverted case 6
 		edges = { 46,45,10,46,10,20,23,37,13 };
 		break;
 	case 0b11100111://inverted case 4
@@ -768,7 +768,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11101000:
 		edges = {26,46,23,15,13,45,45,13,46,46,13,23};
 		break;
-	case 0b11101001:
+	case 0b11101001://inverted case 7
 		edges = { 46,45,40,10,15,13,26,20,23 };
 		break;
 	case 0b11101010://inverted case 5
