@@ -84,7 +84,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00000100://case 1
 		edges = { 20,23,26 };
 		break;
-	case 0b00000101:
+	case 0b00000101:// case 2
 		edges = {10, 26, 40, 10, 23, 26};
 		break;
 	case 0b00000110: //case 3
@@ -99,7 +99,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00001001:
 		edges = {20,10,40,13,23,37};
 		break;
-	case 0b00001010:
+	case 0b00001010://case 2
 		edges = {10,15,23,15,37,23};
 		break;
 	case 0b00001011:
@@ -120,7 +120,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00010000://case 1
 		edges = { 40,45,46 };
 		break;
-	case 0b00010001:
+	case 0b00010001://case 2
 		edges = {10, 45, 46, 10, 46, 20};
 		break;
 	case 0b00010010:
@@ -171,7 +171,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00100001:
 		edges = {10,20,40,45,15,57};
 		break;
-	case 0b00100010:
+	case 0b00100010:// case 2
 		edges = {10, 13, 57, 10, 57, 45};
 		break;
 	case 0b00100011:
@@ -273,7 +273,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01000011:
 		edges = { 40,15,13,13,40,20,46,67,26};
 		break;
-	case 0b01000100:
+	case 0b01000100://case 2
 		edges = {20, 23, 67, 20, 67, 46};
 		break;
 	case 0b01000101:
@@ -309,7 +309,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01001111:
 		edges = {40,15,37,40,37,67,40,67,46 };
 		break;
-	case 0b01010000:
+	case 0b01010000://case 2
 		edges = {40, 45, 26, 45, 67, 26};
 		break;
 	case 0b01010001:
@@ -450,7 +450,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01111110:
 		edges = { 20,10,40,67,57,37 };
 		break;
-	case 0b01111111:
+	case 0b01111111://inverted class 1
 		edges = {67,37,57,};
 		break;
 	case 0b10000000://case 1
@@ -477,7 +477,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10000111:
 		edges = {67,57,37,26,40,15,26,15,13,26,13,23,};
 		break;
-	case 0b10001000:
+	case 0b10001000://case 2
 		edges = {13, 57, 67, 13, 67, 23};
 		break;
 	case 0b10001001:
@@ -549,7 +549,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10011111:
 		edges = { 46,67,26,45,57,15 };
 		break;
-	case 0b10100000:
+	case 0b10100000://case 2
 		edges = {15, 37, 67, 15, 67, 45};
 		break;
 	case 0b10100001:
@@ -642,7 +642,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10111110:
 		edges = { 46,26,67,40,20,10 };
 		break;
-	case 0b10111111:
+	case 0b10111111://inverted class 1
 		edges = {46,67,26};
 		break;
 	case 0b11000000://case 2
@@ -738,7 +738,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11011110:
 		edges = { 10,20,40,45,15,57 };
 		break;
-	case 0b11011111:
+	case 0b11011111://inverted class 1
 		edges = {45,57,15};
 		break;
 	case 0b11100000:
@@ -786,7 +786,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11101110:
 		edges = { 10, 45, 46, 10, 46, 20 };
 		break;
-	case 0b11101111:
+	case 0b11101111://inverted class 1
 		edges = {46,45,40};
 		break;
 	case 0b11110000:
@@ -810,7 +810,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11110110:
 		edges = { 20,10,40,13,23,37 };
 		break;
-	case 0b11110111:
+	case 0b11110111://inverted class 1
 		edges = {13,37,23};
 		break;
 	case 0b11111000:
@@ -822,16 +822,16 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11111010:
 		edges = { 10, 26, 40, 10, 23, 26 };
 		break;
-	case 0b11111011:
+	case 0b11111011://inverted case 1
 		edges = {20,23,26};
 		break;
 	case 0b11111100:
 		edges = { 20,40,15,15,13,20 };
 		break;
-	case 0b11111101:
+	case 0b11111101://inverted case 1
 		edges = {10,13,15};
 		break;
-	case 0b11111110:
+	case 0b11111110://inverted case 1
 		edges = {40,20,10};
 		break;
 	case 0b11111111:
