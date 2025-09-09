@@ -141,7 +141,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00010111:
 		edges = {13,15,45,23,26,46,13,45,46,23,13,46};
 		break;
-	case 0b00011000:
+	case 0b00011000:// case 4
 		edges = {13,37,23,46,45,40};
 		break;
 	case 0b00011001:
@@ -177,7 +177,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b00100011:
 		edges = {20,13,57,20,57,45,20,45,40,};
 		break;
-	case 0b00100100:
+	case 0b00100100:// case 4
 		edges = {26,20,23,45,57,15};
 		break;
 	case 0b00100101:
@@ -267,7 +267,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01000001://case 3
 		edges = {46,26,67,40,20,10};
 		break;
-	case 0b01000010:
+	case 0b01000010://case 4
 		edges = {10,15,13,46,67,26};
 		break;
 	case 0b01000011:
@@ -447,7 +447,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b01111101://inverted case 3
 		edges = { 67,57,37,15,10,13 };
 		break;
-	case 0b01111110:
+	case 0b01111110://inverted case 4
 		edges = { 20,10,40,67,57,37 };
 		break;
 	case 0b01111111://inverted class 1
@@ -456,7 +456,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10000000://case 1
 		edges = { 37,57,67 };
 		break;
-	case 0b10000001:
+	case 0b10000001://case 4
 		edges = {20,10,40,67,57,37};
 		break;
 	case 0b10000010://case 3
@@ -636,7 +636,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b10111100:
 		edges = { 40,15,13,13,40,20,46,67,26 };
 		break;
-	case 0b10111101:
+	case 0b10111101://inverted case 4
 		edges = { 10,15,13,46,67,26 };
 		break;
 	case 0b10111110://inverted case 3
@@ -726,7 +726,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11011010:
 		edges = { 40,10,23,40,23,26,45,57,15 };
 		break;
-	case 0b11011011:
+	case 0b11011011://inverted case 4
 		edges = { 26,20,23,45,57,15 };
 		break;
 	case 0b11011100:
@@ -762,7 +762,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 	case 0b11100110:
 		edges = { 46,45,10,46,10,20,23,37,13 };
 		break;
-	case 0b11100111:
+	case 0b11100111://inverted case 4
 		edges = { 13,37,23,46,45,40 };
 		break;
 	case 0b11101000:
@@ -863,4 +863,3 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 }
 
 
- 
