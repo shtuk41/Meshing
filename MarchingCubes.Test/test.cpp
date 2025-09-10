@@ -1959,8 +1959,8 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -2062,8 +2062,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase12)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
