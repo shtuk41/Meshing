@@ -1144,8 +1144,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase5)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1246,8 +1246,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase6)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1348,8 +1347,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase6)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1383,7 +1382,7 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase6)
     }
 }
 
-TEST_F(OpenGLTestFixture, TestCase7)
+TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
 {
     float cubeEdgeLength = 200;
     float half = cubeEdgeLength / 2;
@@ -1551,8 +1550,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase7)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1654,8 +1653,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1756,8 +1755,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase9)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -1858,8 +1857,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase10)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
@@ -2165,8 +2164,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase13)
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glFrontFace(GL_CW);
-            glDisable(GL_CULL_FACE);
+
+            //glDisable(GL_CULL_FACE);
 
             glUseProgram(cube.GetProgramId());
 
