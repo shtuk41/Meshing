@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include <ioData.h>
 #include <MarchingCubes.h>
@@ -30,30 +31,53 @@ int main()
 	const int height = header->recoY;
 	const int depth = header->recoZ;
 
-	const double voxSizeX = header->voxSizeX;
-	const double voxSizeY = header->voxSizeY;
-	const double voxSizeZ = header->voxSizeZ;
+	const float voxSizeX = static_cast<float>(header->voxSizeX);
+	const float voxSizeY = static_cast<float>(header->voxSizeY);
+	const float voxSizeZ = static_cast<float>(header->voxSizeZ);
 
 	mesh fullMesh;
 
-    for (int z = 0; z < depth; ++z)
+    for (int z = 0; z < depth - 1; ++z)
     {
-        for (int y = 0; y < height; ++y)
+        for (int y = 0; y < height - 1; ++y)
         {
-            for (int x = 0; x < width; ++x)
+            for (int x = 0; x < width - 1; ++x)
             {
-                size_t index0 = x + width * (y + height * z);
-				size_t index1 = x + width * (y + height * z);
-				size_t index2 = x + width * (y + height * z);
-				size_t index3 = x + width * (y + height * z);
-				size_t index4 = x + width * (y + height * z);
-				size_t index5 = x + width * (y + height * z);
-				size_t index6 = x + width * (y + height * z);
-				size_t index7 = x + width * (y + height * z);
+				std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+				cell.reserve(8);
 
-				//volumeDataTex[dstIdx] = 0;
+				std::array<float, 3> aindex0 = {x * voxSizeX, y * voxSizeY, z * voxSizeZ};
+				std::array<float, 3> aindex1 = {(x + 1) * voxSizeX, y * voxSizeY, z * voxSizeZ};
+				std::array<float, 3> aindex2 = {x * voxSizeX, y * voxSizeY, (z + 1) * voxSizeZ};
+				std::array<float, 3> aindex3 = {(x + 1) * voxSizeX, y * voxSizeY, (z + 1) * voxSizeZ};
+				std::array<float, 3> aindex4 = { x * voxSizeX, (y + 1) * voxSizeY, z * voxSizeZ };
+				std::array<float, 3> aindex5 = { (x + 1) * voxSizeX, (y + 1) * voxSizeY, z * voxSizeZ };
+				std::array<float, 3> aindex6 = { x * voxSizeX, (y + 1) * voxSizeY, (z + 1) * voxSizeZ };
+				std::array<float, 3> aindex7 = { (x + 1) * voxSizeX, (y + 1) * voxSizeY, (z + 1) * voxSizeZ };
 
-				mesh localMesh;
+				unsigned short usIndex0 = static_cast<unsigned short>(buffer[x + width * (y + height * z)]);
+				unsigned short usIndex1 = static_cast<unsigned short>(buffer[(x + 1) + width * (y + height * z)]);
+				unsigned short usIndex2 = static_cast<unsigned short>(buffer[x + width * (y + height * (z + 1))]);
+				unsigned short usIndex3 = static_cast<unsigned short>(buffer[(x + 1) + width * (y + height * (z + 1))]);
+				unsigned short usIndex4 = static_cast<unsigned short>(buffer[x + width * ((y + 1) + height * z)]);
+				unsigned short usIndex5 = static_cast<unsigned short>(buffer[(x + 1) + width * ((y + 1) + height * z)]);
+				unsigned short usIndex6 = static_cast<unsigned short>(buffer[x + width * ((y + 1) + height * (z + 1))]);
+				unsigned short usIndex7 = static_cast<unsigned short>(buffer[(x + 1) + width * ((y + 1) + height * (z + 1))]);
+
+				cell.push_back({ aindex0, usIndex0 });
+				cell.push_back({ aindex1, usIndex1 });
+				cell.push_back({ aindex2, usIndex2 });
+				cell.push_back({ aindex3, usIndex3 });
+				cell.push_back({ aindex4, usIndex4 });
+				cell.push_back({ aindex5, usIndex5 });
+				cell.push_back({ aindex6, usIndex6 });
+				cell.push_back({ aindex7, usIndex7 });
+
+				std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+
+				int cornerSet{ 0 };
+
+				mesh localMesh = getTriangles(cell, innerRange, cornerSet);
 
 				fullMesh.insert(fullMesh.end(), localMesh.begin(), localMesh.end());
             }
@@ -83,25 +107,32 @@ void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore)
 	size_t count = meshToStore.size();
 	stl.write(reinterpret_cast<char*>(&count), sizeof(count));
 
-	for (auto& t : meshToStore)
+	if (stl.is_open())
 	{
-		Triangle triangle;
+		for (auto& t : meshToStore)
+		{
+			Triangle triangle;
 
-		triangle.v1.x = t[0][0];
-		triangle.v1.y = t[0][1];
-		triangle.v1.z = t[0][2];
+			triangle.v1.x = t[0][0];
+			triangle.v1.y = t[0][1];
+			triangle.v1.z = t[0][2];
 
-		triangle.v2.x = t[1][0];
-		triangle.v2.y = t[1][1];
-		triangle.v2.z = t[1][2];
+			triangle.v2.x = t[1][0];
+			triangle.v2.y = t[1][1];
+			triangle.v2.z = t[1][2];
 
-		triangle.v3.x = t[2][0];
-		triangle.v3.y = t[2][1];
-		triangle.v3.z = t[2][2];
+			triangle.v3.x = t[2][0];
+			triangle.v3.y = t[2][1];
+			triangle.v3.z = t[2][2];
 
-		triangle.normal = computeNormal(triangle.v1, triangle.v2, triangle.v3);
+			triangle.normal = computeNormal(triangle.v1, triangle.v2, triangle.v3);
 
-		stl.write(reinterpret_cast<char*>(&triangle), sizeof(Triangle));
+			stl.write(reinterpret_cast<char*>(&triangle), sizeof(Triangle));
+		}
+	}
+	else
+	{
+		throw std::exception("can't open stl file");
 	}
 
 	stl.close();
