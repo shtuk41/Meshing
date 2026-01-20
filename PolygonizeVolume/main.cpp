@@ -9,8 +9,19 @@
 #include <ioData.h>
 #include <MarchingCubes.h>
 
-struct Vec3 { float x, y, z; };
-struct Triangle { Vec3 normal; Vec3 v1, v2, v3; uint16_t attr = 0; };
+struct Vec3 
+{ 
+	float x, y, z; 
+};
+
+#pragma pack(push, 1) // Forces 1-byte alignment (no padding)
+struct Triangle 
+{ 
+	Vec3 normal; 
+	Vec3 v1, v2, v3; 
+	uint16_t attr = 0; 
+};
+#pragma pack(pop)
 
 void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore);
 
@@ -30,6 +41,20 @@ int main()
 	const int width = header->recoX;
 	const int height = header->recoY;
 	const int depth = header->recoZ;
+
+	//size_t dstIdx = x + width * (y + height * z);
+
+	//std::vector<unsigned char> buffer = {0,0,0,0,0,0,0,0,0,
+	//									0,0,0,0,255,0,0,0,0,
+	//									0,0,0,0,0,0,0,0,0};
+
+	//const int width = 3;
+	//const int height = 3;
+	//const int depth = 3;
+
+	//const float voxSizeX = 5; 
+	//const float voxSizeY = 5; 
+	//const float voxSizeZ = 5; 
 
 	const float voxSizeX = static_cast<float>(header->voxSizeX);
 	const float voxSizeY = static_cast<float>(header->voxSizeY);
@@ -73,7 +98,7 @@ int main()
 				cell.push_back({ aindex6, usIndex6 });
 				cell.push_back({ aindex7, usIndex7 });
 
-				std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
+				std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
 
 				int cornerSet{ 0 };
 
@@ -84,15 +109,26 @@ int main()
         }
     }
 
+
+	std::cout << "mesh size: " << fullMesh.size() << std::endl;
+	writeMeshToStl("test.stl", fullMesh);
+
 	return 0;
 }
 
 Vec3 computeNormal(const Vec3& v1, const Vec3& v2, const Vec3& v3) {
+	// Edge vectors
 	Vec3 u = { v2.x - v1.x, v2.y - v1.y, v2.z - v1.z };
 	Vec3 v = { v3.x - v1.x, v3.y - v1.y, v3.z - v1.z };
-	Vec3 n = { u.y * v.z - u.z * v.y,
-			   u.z * v.x - u.x * v.z,
-			   u.x * v.y - u.y * v.x };
+
+	// ORIGINAL CROSS PRODUCT: u cross v
+	Vec3 n = {
+		//v.y * u.z - v.z * u.y,
+		u.y * v.z - u.z * v.y,
+		u.z * v.x - u.x * v.z,
+		u.x * v.y - u.y * v.x
+	};
+
 	float len = std::sqrt(n.x * n.x + n.y * n.y + n.z * n.z);
 	if (len > 0) { n.x /= len; n.y /= len; n.z /= len; }
 	return n;
@@ -101,38 +137,42 @@ Vec3 computeNormal(const Vec3& v1, const Vec3& v2, const Vec3& v3) {
 void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore)
 {
 	std::ofstream stl(stlFileName.c_str(), std::ios::binary);
-	char header[80] = {};
+	if (!stl.is_open()) throw std::runtime_error("can't open stl file");
+
+	char header[80] = "created by aleksander shtuk 2026";
 	stl.write(header, 80);
 
-	size_t count = meshToStore.size();
-	stl.write(reinterpret_cast<char*>(&count), sizeof(count));
+	// FIX 1: Use uint32_t to ensure exactly 4 bytes are written
+	uint32_t count = static_cast<uint32_t>(meshToStore.size());
+	stl.write(reinterpret_cast<char*>(&count), 4);
 
-	if (stl.is_open())
+	for (auto& t : meshToStore)
 	{
-		for (auto& t : meshToStore)
-		{
-			Triangle triangle;
+		Triangle triangle;
 
-			triangle.v1.x = t[0][0];
-			triangle.v1.y = t[0][1];
-			triangle.v1.z = t[0][2];
+		triangle.v1.x = (float)t[0][0];
+		triangle.v1.y = (float)t[0][1];
+		triangle.v1.z = (float)t[0][2];
 
-			triangle.v2.x = t[1][0];
-			triangle.v2.y = t[1][1];
-			triangle.v2.z = t[1][2];
+		triangle.v2.x = (float)t[1][0];
+		triangle.v2.y = (float)t[1][1];
+		triangle.v2.z = (float)t[1][2];
 
-			triangle.v3.x = t[2][0];
-			triangle.v3.y = t[2][1];
-			triangle.v3.z = t[2][2];
+		triangle.v3.x = (float)t[2][0];
+		triangle.v3.y = (float)t[2][1];
+		triangle.v3.z = (float)t[2][2];
 
-			triangle.normal = computeNormal(triangle.v1, triangle.v2, triangle.v3);
+		triangle.normal = computeNormal(triangle.v1, triangle.v2, triangle.v3);
 
-			stl.write(reinterpret_cast<char*>(&triangle), sizeof(Triangle));
-		}
-	}
-	else
-	{
-		throw std::exception("can't open stl file");
+		// FIX 2: Write exactly 50 bytes per triangle (Normal + 3 Vertices + 2-byte attribute)
+		// This prevents struct padding from corrupting the file.
+		stl.write(reinterpret_cast<char*>(&triangle.normal), 12);
+		stl.write(reinterpret_cast<char*>(&triangle.v1), 12);
+		stl.write(reinterpret_cast<char*>(&triangle.v3), 12);
+		stl.write(reinterpret_cast<char*>(&triangle.v2), 12);
+
+		uint16_t attributeByteCount = 0; // Required 2-byte spacer
+		stl.write(reinterpret_cast<char*>(&attributeByteCount), 2);
 	}
 
 	stl.close();
