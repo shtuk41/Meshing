@@ -27,7 +27,9 @@ void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore);
 
 int main()
 {
-	std::string volumeFile(R"(D:\Files\CTLab\SaveVolumeToFile\volumeHeader.uint16_scv)");
+	//std::string volumeFile(R"(D:\Files\CTLab\SaveVolumeToFile\volumeHeader.uint16_scv)");
+	std::string volumeFile(R"(D:\Files\Cesars\Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
+
 
 	VolumeData vd(volumeFile);
 	vd.fillBuffer();
@@ -64,11 +66,11 @@ int main()
 
 	mesh fullMesh;
 
-    for (int z = -1; z < depth; ++z)
+    for (int z = 0; z < depth - 1; ++z)
     {
-        for (int y = -1; y < height; ++y)
+        for (int y = 0; y < height - 1; ++y)
         {
-            for (int x = -1; x < width; ++x)
+            for (int x = 0; x < width - 1; ++x)
             {
 				std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 				cell.reserve(8);
@@ -109,8 +111,8 @@ int main()
 				cell.push_back({ aindex6, usIndex6 });
 				cell.push_back({ aindex7, usIndex7 });
 
-				std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
-
+				//std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
+				std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
 				int cornerSet{ 0 };
 
 				mesh localMesh = getTriangles(cell, innerRange, cornerSet);
@@ -161,13 +163,13 @@ void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore)
 	{
 		Triangle triangle;
 
-		triangle.v1.x = (float)t[0][0];
-		triangle.v1.y = (float)t[0][1];
-		triangle.v1.z = (float)t[0][2];
+		triangle.v1.x = (float)t[1][0];
+		triangle.v1.y = (float)t[1][1];
+		triangle.v1.z = (float)t[1][2];
 
-		triangle.v2.x = (float)t[1][0];
-		triangle.v2.y = (float)t[1][1];
-		triangle.v2.z = (float)t[1][2];
+		triangle.v2.x = (float)t[0][0];
+		triangle.v2.y = (float)t[0][1];
+		triangle.v2.z = (float)t[0][2];
 
 		triangle.v3.x = (float)t[2][0];
 		triangle.v3.y = (float)t[2][1];
