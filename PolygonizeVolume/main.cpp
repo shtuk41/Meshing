@@ -60,13 +60,15 @@ int main()
 	const float voxSizeY = static_cast<float>(header->voxSizeY);
 	const float voxSizeZ = static_cast<float>(header->voxSizeZ);
 
+	unsigned int bufferSize = static_cast<unsigned int>(buffer.size());
+
 	mesh fullMesh;
 
-    for (int z = 0; z < depth - 1; ++z)
+    for (int z = -1; z < depth; ++z)
     {
-        for (int y = 0; y < height - 1; ++y)
+        for (int y = -1; y < height; ++y)
         {
-            for (int x = 0; x < width - 1; ++x)
+            for (int x = -1; x < width; ++x)
             {
 				std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
 				cell.reserve(8);
@@ -80,14 +82,23 @@ int main()
 				std::array<float, 3> aindex6 = { x * voxSizeX, (y + 1) * voxSizeY, (z + 1) * voxSizeZ };
 				std::array<float, 3> aindex7 = { (x + 1) * voxSizeX, (y + 1) * voxSizeY, (z + 1) * voxSizeZ };
 
-				unsigned short usIndex0 = static_cast<unsigned short>(buffer[x + width * (y + height * z)]);
-				unsigned short usIndex1 = static_cast<unsigned short>(buffer[(x + 1) + width * (y + height * z)]);
-				unsigned short usIndex2 = static_cast<unsigned short>(buffer[x + width * (y + height * (z + 1))]);
-				unsigned short usIndex3 = static_cast<unsigned short>(buffer[(x + 1) + width * (y + height * (z + 1))]);
-				unsigned short usIndex4 = static_cast<unsigned short>(buffer[x + width * ((y + 1) + height * z)]);
-				unsigned short usIndex5 = static_cast<unsigned short>(buffer[(x + 1) + width * ((y + 1) + height * z)]);
-				unsigned short usIndex6 = static_cast<unsigned short>(buffer[x + width * ((y + 1) + height * (z + 1))]);
-				unsigned short usIndex7 = static_cast<unsigned short>(buffer[(x + 1) + width * ((y + 1) + height * (z + 1))]);
+
+				unsigned int index = x + width * (y + height * z);
+				unsigned short usIndex0 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = (x + 1) + width * (y + height * z);
+				unsigned short usIndex1 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = x + width * (y + height * (z + 1));
+				unsigned short usIndex2 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = (x + 1) + width * (y + height * (z + 1));
+				unsigned short usIndex3 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = x + width * ((y + 1) + height * z);
+				unsigned short usIndex4 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = (x + 1) + width * ((y + 1) + height * z);
+				unsigned short usIndex5 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = x + width * ((y + 1) + height * (z + 1));
+				unsigned short usIndex6 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
+				index = (x + 1) + width * ((y + 1) + height * (z + 1));
+				unsigned short usIndex7 = static_cast<unsigned short>((index < 0 || index >= bufferSize) ? 0 : buffer[index]);
 
 				cell.push_back({ aindex0, usIndex0 });
 				cell.push_back({ aindex1, usIndex1 });
