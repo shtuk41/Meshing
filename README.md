@@ -3,6 +3,25 @@ Point cloud meshing implementation for CT tool.
 
 Starting with basic marching cubes and visualization for debugging and future development.
 
+## Example
+
+This example is using two material scissors with plastic handles.
+
+### Blades
+![Screenshot](README/scissorsBlades.png)
+
+### Handles
+
+![Screenshot](README/scissorsPlaticHandles.png)
+
+### Screw close view 1
+
+![Screenshot](README/scissorsScrewCloseView.png)
+
+### Screw close view 2
+
+![Screenshot](README/scissorsScrewCloseView2.png)
+
 ## Case 1
 ![Screenshot](README/Case1.PNG)
 
