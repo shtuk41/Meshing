@@ -192,9 +192,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase1)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -225,8 +226,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase1)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -292,10 +293,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase1)
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
         int cornerSet{ 0 };
+        std::vector<int> edges;
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -326,8 +327,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase1)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -393,10 +394,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase2)
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
         int cornerSet{ 0 };
+        std::vector<int> edges;
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -427,8 +428,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase2)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<const float>(rotateX));
+            cameraGlobal.rotateY(static_cast<const float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -494,10 +495,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase2)
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
         int cornerSet{ 0 };
+        std::vector<int> edges;
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -528,8 +529,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase2)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<const float>(rotateX));
+            cameraGlobal.rotateY(static_cast<const float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -595,10 +596,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase3)
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
         int cornerSet{ 0 };
+        std::vector<int> edges;
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -629,8 +630,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase3)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<const float>(rotateX));
+            cameraGlobal.rotateY(static_cast<const float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -697,9 +698,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase3)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -730,8 +732,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase3)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -798,9 +800,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase4)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -831,8 +834,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase4)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -899,9 +902,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase4)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -932,8 +936,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase4)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1000,9 +1004,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1033,8 +1038,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1101,9 +1106,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase5)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1134,8 +1140,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase5)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1203,9 +1209,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase6)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1236,8 +1243,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase6)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1304,9 +1311,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase6)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1337,8 +1345,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase6)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1406,9 +1414,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1439,8 +1448,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1507,9 +1516,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase7)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1540,8 +1550,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase7)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1610,9 +1620,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1643,8 +1654,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1712,9 +1723,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase9)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1745,8 +1757,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase9)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1814,9 +1826,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase10)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1847,8 +1860,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase10)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -1916,9 +1929,10 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -1949,8 +1963,8 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -2019,9 +2033,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase12)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -2052,8 +2067,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase12)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();
@@ -2121,9 +2136,10 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase13)
 
         int cornerSet{ 0 };
 
-        mesh m = getTriangles(cell, innerRange, cornerSet);
+        std::vector<int> edges;
 
-        std::vector<std::array<std::array<float, 3>, 3>>;
+        mesh m = getTriangles(cell, innerRange, cornerSet, edges);
+
         std::vector<float> meshData;
 
         for (const auto& t : m)
@@ -2154,8 +2170,8 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase13)
             glm::mat4 projection_matrix;
             glm::mat4 view_matrix;
 
-            cameraGlobal.rotateX(rotateX);
-            cameraGlobal.rotateY(rotateY);
+            cameraGlobal.rotateX(static_cast<float>(rotateX));
+            cameraGlobal.rotateY(static_cast<float>(rotateY));
             cameraGlobal.computeViewProjectionMatrices(false, false);
             projection_matrix = cameraGlobal.getProjectionMatrix();
             view_matrix = cameraGlobal.getViewMatrix();

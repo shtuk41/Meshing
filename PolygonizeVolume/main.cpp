@@ -115,7 +115,9 @@ int main()
 				std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
 				int cornerSet{ 0 };
 
-				mesh localMesh = getTriangles(cell, innerRange, cornerSet);
+				std::vector<int> edges;
+
+				mesh localMesh = getTriangles(cell, innerRange, cornerSet, edges);
 
 				fullMesh.insert(fullMesh.end(), localMesh.begin(), localMesh.end());
             }

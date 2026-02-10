@@ -156,7 +156,7 @@ void Cube::Draw()
         glUniform4fv(color_vector, 1, glm::value_ptr(meshColor));
 
         glBindVertexArray(meshArrayId);
-        glDrawArrays(GL_TRIANGLES, 0, meshData.size());
+        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)meshData.size());
     }
 }
 

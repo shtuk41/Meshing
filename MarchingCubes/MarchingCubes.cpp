@@ -54,7 +54,7 @@ std::array<float, 3> operator/(const std::array<float, 3>& f1, float d)
 /// <param name="innerRange">range of values that belong to an object</param>
 /// <returns>mesh as an array of triangles</returns>
 
-mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned short>>& cell, std::pair<unsigned short, unsigned short>& innerRange, int &cornerSet)
+mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned short>>& cell, std::pair<unsigned short, unsigned short>& innerRange, int &cornerSet, std::vector<int>& edges)
 {
 	if (cell.size() != 8)
 	{
@@ -75,8 +75,6 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 
 		count++;
 	}
-
-	std::vector<int> edges;
 
 #ifdef _DEBUG
 	std::cout << "set: 0b" << std::bitset<8>(cornerSet) << '\n';
