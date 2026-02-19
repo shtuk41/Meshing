@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include <ioData.h>
 #include <MarchingCubes.h>
@@ -24,6 +25,37 @@ struct Triangle
 #pragma pack(pop)
 
 void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore);
+uint64_t getVertexPosition(int x, int y, int z, int edge);
+
+struct Vertex
+{
+	float x, y, z;
+	unsigned int halfEdgeRef;
+};
+
+struct Face
+{
+	unsigned int halfEdgeRef;
+};
+
+struct HalfEdge
+{
+	unsigned int vertexRef;
+	unsigned int faceRef;
+	unsigned int nextHalfEdgeRef;
+	unsigned int prevHalfEdgeRef;
+	unsigned int oppositeHalfEdgeRef;
+};
+
+std::unordered_map<uint64_t, unsigned int> vertexMap;
+std::unordered_map<uint64_t, unsigned int> halfEdgeMap;
+std::vector<Vertex> vertices;
+std::vector<HalfEdge> halfEdges;
+std::vector<Face> faces;
+
+unsigned int vertexCounter = 0;
+unsigned int halfEdgeCounter = 0;
+unsigned int faceCounter = 0;
 
 int main()
 {
@@ -65,6 +97,7 @@ int main()
 	unsigned int bufferSize = static_cast<unsigned int>(buffer.size());
 
 	mesh fullMesh;
+
 
     for (int z = 0; z < depth - 1; ++z)
     {
@@ -120,15 +153,52 @@ int main()
 				mesh localMesh = getTriangles(cell, innerRange, cornerSet, edges);
 
 				fullMesh.insert(fullMesh.end(), localMesh.begin(), localMesh.end());
+
+				for (auto e : edges)
+				{
+					uint64_t pointPosition = getVertexPosition(x, y, z, e);
+				}
             }
         }
     }
-
 
 	std::cout << "mesh size: " << fullMesh.size() << std::endl;
 	writeMeshToStl("test.stl", fullMesh);
 
 	return 0;
+}
+
+uint64_t getVertexPosition(int x, int y, int z, int edge)
+{
+	int axis;
+
+	switch (edge)
+	{
+		case 10:
+		case 23:
+		case 45:
+		case 67:
+			axis = 0; //x
+			break;
+		case 40:
+		case 15:
+		case 26:
+		case 37:
+			axis = 1; //y
+			break;
+		case 20:
+		case 13: 
+		case 46:
+		case 57:
+			axis = 2; //z
+			break;
+		default:
+			throw std::exception("edge is undefined");
+	}
+
+	uint64_t edgeIdentifier =  (x << 30) | (y << 16) | (z << 2) | axis;
+
+	return edgeIdentifier;
 }
 
 Vec3 computeNormal(const Vec3& v1, const Vec3& v2, const Vec3& v3) {
