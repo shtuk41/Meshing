@@ -44,7 +44,7 @@ struct HalfEdge
 	unsigned int faceRef;
 	unsigned int nextHalfEdgeRef;
 	unsigned int prevHalfEdgeRef;
-	unsigned int oppositeHalfEdgeRef;
+	int oppositeHalfEdgeRef = -1;
 };
 
 std::unordered_map<uint64_t, unsigned int> vertexMap;
@@ -60,11 +60,12 @@ unsigned int faceCounter = 0;
 int main()
 {
 	//std::string volumeFile(R"(D:\Files\CTLab\SaveVolumeToFile\volumeHeader.uint16_scv)");
-	std::string volumeFile(R"(D:\Files\Cesars\Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
+	//std::string volumeFile(R"(D:\Files\Cesars\Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
+	std::string volumeFile(R"(D:\Files\Cesars\Boston.uint16_scv)");
 
 
 	VolumeData vd(volumeFile);
-	vd.fillBuffer();
+ 	vd.fillBuffer();
 
 	std::cout << vd.getHeaderString() << std::endl;
 
@@ -154,16 +155,195 @@ int main()
 
 				fullMesh.insert(fullMesh.end(), localMesh.begin(), localMesh.end());
 
+				//a. check if a vertex exists, if not insert into vertex collection
+				//b. get second vertex
+				//c. check if halfedge exists, if not add it to collection, check if opposite halfedge exists, if so, assign reverses to both halfedges  
+				//d. Add face into collection, reference the half edge
+				//e. get third vertex. do procedure C for two halfedges.
+
+				int eCount = 0;
+				uint64_t pointPosition1;
+				uint64_t pointPosition2;
+				uint64_t pointPosition3;
+				uint32_t vid1, vid2, vid3;
+				uint32_t hid1, hid2, hid3;
+				bool v1NotFound = true;
+
+				HalfEdge edge1, edge2, edge3;
+
+
 				for (auto e : edges)
 				{
-					uint64_t pointPosition = getVertexPosition(x, y, z, e);
+					if ((eCount % 3) == 0)
+					{
+						v1NotFound = true;
+						edge1.oppositeHalfEdgeRef = -1;
+						edge2.oppositeHalfEdgeRef = -1;
+						edge3.oppositeHalfEdgeRef = -1;
+
+						//A
+						pointPosition1 = getVertexPosition(x, y, z, e);
+
+						auto pm = vertexMap.find(pointPosition1);
+						if (pm != vertexMap.end())
+						{
+							vid1 = pm->second;
+							v1NotFound = false;
+						}
+						else
+						{
+							vid1 = vertexCounter++;
+							vertexMap.insert({pointPosition1, vid1});
+						}
+					}
+					else if ((eCount % 3) == 1)
+					{
+						//B
+						pointPosition2 = getVertexPosition(x, y, z, e);
+
+						auto pm = vertexMap.find(pointPosition2);
+						if (pm != vertexMap.end())
+						{
+							vid2 = pm->second;
+						}
+						else
+						{
+							vid2 = vertexCounter++;
+							vertexMap.insert({ pointPosition2, vid2 });
+						}
+
+						uint64_t halfedge1Key = ((uint64_t)vid1 << 32) | vid2;
+
+						auto hem = halfEdgeMap.find(halfedge1Key);
+
+						if (hem != halfEdgeMap.end())
+						{
+							throw std::exception("halfedge exists");
+							
+						}
+						else
+						{
+							hid1 = halfEdgeCounter++;
+							halfEdgeMap.insert({ halfedge1Key , hid1});
+
+							uint64_t halfedge1KeyOpposite = ((uint64_t)vid2 << 32) | vid1;
+							auto hemOpposite = halfEdgeMap.find(halfedge1KeyOpposite);
+
+							if (hemOpposite != halfEdgeMap.end())
+							{
+								uint32_t oppositeId = hemOpposite->second;
+								halfEdges[oppositeId].oppositeHalfEdgeRef = hid1;
+
+								edge1.oppositeHalfEdgeRef = oppositeId;
+								halfEdges.push_back(edge1);
+							}
+
+							Face f;
+							f.halfEdgeRef = hid1;
+
+							faces.push_back(f);
+							faceCounter++;
+						}
+					}
+					else
+					{
+						pointPosition3 = getVertexPosition(x, y, z, e);
+
+						auto pm = vertexMap.find(pointPosition3);
+						if (pm != vertexMap.end())
+						{
+							vid3 = pm->second;
+						}
+						else
+						{
+							vid3 = vertexCounter++;
+							vertexMap.insert({ pointPosition3, vid3 });
+						}
+
+						uint64_t halfedge2Key = ((uint64_t)vid2 << 32) | vid3;
+
+						auto hem = halfEdgeMap.find(halfedge2Key);
+
+						if (hem != halfEdgeMap.end())
+						{
+							throw std::exception("halfedge exists");
+
+						}
+						else
+						{
+							hid2 = halfEdgeCounter++;
+							halfEdgeMap.insert({ halfedge2Key , hid2 });
+
+							uint64_t halfedge2KeyOpposite = ((uint64_t)vid3 << 32) | vid2;
+							auto hemOpposite = halfEdgeMap.find(halfedge2KeyOpposite);
+
+							if (hemOpposite != halfEdgeMap.end())
+							{
+								uint32_t oppositeId = hemOpposite->second;
+								halfEdges[oppositeId].oppositeHalfEdgeRef = hid2;
+
+								edge2.oppositeHalfEdgeRef = oppositeId;
+								halfEdges.push_back(edge2);
+							}
+						}
+
+						uint64_t halfedge3Key = ((uint64_t)vid3 << 32) | vid1;
+
+						hem = halfEdgeMap.find(halfedge3Key);
+
+						if (hem != halfEdgeMap.end())
+						{
+							throw std::exception("halfedge exists");
+
+						}
+						else
+						{
+							hid3 = halfEdgeCounter++;
+							halfEdgeMap.insert({ halfedge3Key , hid3 });
+
+							uint64_t halfedge3KeyOpposite = ((uint64_t)vid1 << 32) | vid3;
+							auto hemOpposite = halfEdgeMap.find(halfedge3KeyOpposite);
+
+							if (hemOpposite != halfEdgeMap.end())
+							{
+								uint32_t oppositeId = hemOpposite->second;
+								halfEdges[oppositeId].oppositeHalfEdgeRef = hid3;
+
+								edge3.oppositeHalfEdgeRef = oppositeId;
+								halfEdges.push_back(edge3);
+							}
+						}
+
+						edge1.vertexRef = vid2;
+						edge1.faceRef = faceCounter - 1;
+						edge1.nextHalfEdgeRef = hid2;
+						edge1.prevHalfEdgeRef = hid3;
+
+						halfEdges.push_back(edge1);
+
+						edge2.vertexRef = vid3;
+						edge2.faceRef = faceCounter - 1;
+						edge2.nextHalfEdgeRef = hid3;
+						edge2.prevHalfEdgeRef = hid1;
+
+						halfEdges.push_back(edge2);
+
+						edge3.vertexRef = vid1;
+						edge3.faceRef = faceCounter - 1;
+						edge3.nextHalfEdgeRef = hid1;
+						edge3.prevHalfEdgeRef = hid2;
+
+						halfEdges.push_back(edge3);
+					}
+
+					eCount++;
 				}
             }
         }
     }
 
 	std::cout << "mesh size: " << fullMesh.size() << std::endl;
-	writeMeshToStl("test.stl", fullMesh);
+	writeMeshToStl("testboston.stl", fullMesh);
 
 	return 0;
 }
@@ -190,7 +370,7 @@ uint64_t getVertexPosition(int x, int y, int z, int edge)
 		case 13: 
 		case 46:
 		case 57:
-			axis = 2; //z
+ 			axis = 2; //z
 			break;
 		default:
 			throw std::exception("edge is undefined");
