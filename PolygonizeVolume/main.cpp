@@ -33,6 +33,8 @@ struct Vertex
 	unsigned int halfEdgeRef;
 };
 
+Vertex getVertex(uint64_t vertexPosition, uint32_t edgeReference, float voxelSizeX, float voxelSizeY, float voxelSizeZ);
+
 struct Face
 {
 	unsigned int halfEdgeRef;
@@ -61,39 +63,38 @@ int main()
 {
 	//std::string volumeFile(R"(D:\Files\CTLab\SaveVolumeToFile\volumeHeader.uint16_scv)");
 	//std::string volumeFile(R"(D:\Files\Cesars\Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
-	std::string volumeFile(R"(D:\Files\Cesars\Boston.uint16_scv)");
+	//std::string volumeFile(R"(D:\Files\Cesars\BostonSci_109134204_F 2025-8-14 11-39-3.uint16_scv)");
 
+	//VolumeData vd(volumeFile);
+ 	//vd.fillBuffer();
 
-	VolumeData vd(volumeFile);
- 	vd.fillBuffer();
+	//std::cout << vd.getHeaderString() << std::endl;
 
-	std::cout << vd.getHeaderString() << std::endl;
+	//std::vector<unsigned char> buffer = vd.getVolumeDataTex();
 
-	std::vector<unsigned char> buffer = vd.getVolumeDataTex();
+	//auto header = vd.getHeader();
 
-	auto header = vd.getHeader();
-
-	const int width = header->recoX;
-	const int height = header->recoY;
-	const int depth = header->recoZ;
+	//const int width = header->recoX;
+	//const int height = header->recoY;
+	//const int depth = header->recoZ;
 
 	//size_t dstIdx = x + width * (y + height * z);
 
-	//std::vector<unsigned char> buffer = {0,0,0,0,0,0,0,0,0,
-	//									0,0,0,0,255,0,0,0,0,
-	//									0,0,0,0,0,0,0,0,0};
+	std::vector<unsigned char> buffer = {0,0,0,0,0,0,0,0,0,
+										0,0,0,0,255,0,0,0,0,
+										0,0,0,0,0,0,0,0,0};
 
-	//const int width = 3;
-	//const int height = 3;
-	//const int depth = 3;
+	const int width = 3;
+	const int height = 3;
+	const int depth = 3;
 
-	//const float voxSizeX = 5; 
-	//const float voxSizeY = 5; 
-	//const float voxSizeZ = 5; 
+	const float voxSizeX = 5; 
+	const float voxSizeY = 5; 
+	const float voxSizeZ = 5; 
 
-	const float voxSizeX = static_cast<float>(header->voxSizeX);
-	const float voxSizeY = static_cast<float>(header->voxSizeY);
-	const float voxSizeZ = static_cast<float>(header->voxSizeZ);
+	//const float voxSizeX = static_cast<float>(header->voxSizeX);
+	//const float voxSizeY = static_cast<float>(header->voxSizeY);
+	//const float voxSizeZ = static_cast<float>(header->voxSizeZ);
 
 	unsigned int bufferSize = static_cast<unsigned int>(buffer.size());
 
@@ -145,8 +146,8 @@ int main()
 				cell.push_back({ aindex6, usIndex6 });
 				cell.push_back({ aindex7, usIndex7 });
 
-				//std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
-				std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
+				std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
+				//std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
 				int cornerSet{ 0 };
 
 				std::vector<int> edges;
@@ -167,16 +168,13 @@ int main()
 				uint64_t pointPosition3;
 				uint32_t vid1, vid2, vid3;
 				uint32_t hid1, hid2, hid3;
-				bool v1NotFound = true;
 
 				HalfEdge edge1, edge2, edge3;
-
 
 				for (auto e : edges)
 				{
 					if ((eCount % 3) == 0)
 					{
-						v1NotFound = true;
 						edge1.oppositeHalfEdgeRef = -1;
 						edge2.oppositeHalfEdgeRef = -1;
 						edge3.oppositeHalfEdgeRef = -1;
@@ -188,28 +186,35 @@ int main()
 						if (pm != vertexMap.end())
 						{
 							vid1 = pm->second;
-							v1NotFound = false;
 						}
 						else
 						{
 							vid1 = vertexCounter++;
 							vertexMap.insert({pointPosition1, vid1});
+
+							Vertex v = getVertex(pointPosition1, -1, voxSizeX, voxSizeY, voxSizeZ);
+							vertices.push_back(v);
 						}
 					}
 					else if ((eCount % 3) == 1)
 					{
 						//B
 						pointPosition2 = getVertexPosition(x, y, z, e);
+						bool vid2Found = false;
 
 						auto pm = vertexMap.find(pointPosition2);
 						if (pm != vertexMap.end())
 						{
 							vid2 = pm->second;
+							vid2Found = true;
 						}
 						else
 						{
 							vid2 = vertexCounter++;
 							vertexMap.insert({ pointPosition2, vid2 });
+
+							Vertex v = getVertex(pointPosition2, -1, voxSizeX, voxSizeY, voxSizeZ);
+							vertices.push_back(v);
 						}
 
 						uint64_t halfedge1Key = ((uint64_t)vid1 << 32) | vid2;
@@ -235,7 +240,13 @@ int main()
 								halfEdges[oppositeId].oppositeHalfEdgeRef = hid1;
 
 								edge1.oppositeHalfEdgeRef = oppositeId;
-								halfEdges.push_back(edge1);
+							}
+
+							halfEdges.push_back(edge1);
+
+							if (vertices[vid2].halfEdgeRef == 0xffffffff)
+							{
+								vertices[vid2].halfEdgeRef = hid1;
 							}
 
 							Face f;
@@ -248,16 +259,21 @@ int main()
 					else
 					{
 						pointPosition3 = getVertexPosition(x, y, z, e);
+						bool vid3Found = false;
 
 						auto pm = vertexMap.find(pointPosition3);
 						if (pm != vertexMap.end())
 						{
 							vid3 = pm->second;
+							vid3Found = true;
 						}
 						else
 						{
 							vid3 = vertexCounter++;
 							vertexMap.insert({ pointPosition3, vid3 });
+
+							Vertex v = getVertex(pointPosition3, -1, voxSizeX, voxSizeY, voxSizeZ);
+							vertices.push_back(v);
 						}
 
 						uint64_t halfedge2Key = ((uint64_t)vid2 << 32) | vid3;
@@ -283,7 +299,13 @@ int main()
 								halfEdges[oppositeId].oppositeHalfEdgeRef = hid2;
 
 								edge2.oppositeHalfEdgeRef = oppositeId;
-								halfEdges.push_back(edge2);
+							}
+							
+							halfEdges.push_back(edge2);
+
+							if (vertices[vid3].halfEdgeRef == 0xffffffff)
+							{
+								vertices[vid3].halfEdgeRef = hid2;
 							}
 						}
 
@@ -310,7 +332,13 @@ int main()
 								halfEdges[oppositeId].oppositeHalfEdgeRef = hid3;
 
 								edge3.oppositeHalfEdgeRef = oppositeId;
-								halfEdges.push_back(edge3);
+							}
+
+							halfEdges.push_back(edge3);
+
+							if (vertices[vid1].halfEdgeRef == 0xffffffff)
+							{
+								vertices[vid1].halfEdgeRef = hid3;
 							}
 						}
 
@@ -343,6 +371,9 @@ int main()
     }
 
 	std::cout << "mesh size: " << fullMesh.size() << std::endl;
+
+	int64_t eulerNumber = ((int64_t)vertices.size() - (int64_t)(halfEdges.size() / 2) + (int64_t)faces.size());
+	std::cout << "Euler: " << eulerNumber << std::endl;
 	writeMeshToStl("testboston.stl", fullMesh);
 
 	return 0;
@@ -355,22 +386,52 @@ uint64_t getVertexPosition(int x, int y, int z, int edge)
 	switch (edge)
 	{
 		case 10:
+			axis = 0; 
+			break;
 		case 23:
+			z += 1;
+			axis = 0; 
+			break;
 		case 45:
+			y += 1;
+			axis = 0;
+			break;
 		case 67:
-			axis = 0; //x
+			y += 1;
+			z += 1;
+			axis = 0; 
 			break;
 		case 40:
+			axis = 1;
+			break;
 		case 15:
+			x += 1;
+			axis = 1; 
+			break;
 		case 26:
+			z += 1;
+			axis = 1; 
+			break;
 		case 37:
-			axis = 1; //y
+			x += 1;
+			z += 1;
+			axis = 1; 
 			break;
 		case 20:
+			axis = 2; 
+			break;
 		case 13: 
+			x += 1;
+			axis = 2; 
+			break;
 		case 46:
+			y += 1;
+			axis = 2; 
+			break;
 		case 57:
- 			axis = 2; //z
+			x += 1;
+			y += 1;
+ 			axis = 2; 
 			break;
 		default:
 			throw std::exception("edge is undefined");
@@ -379,6 +440,25 @@ uint64_t getVertexPosition(int x, int y, int z, int edge)
 	uint64_t edgeIdentifier =  (x << 30) | (y << 16) | (z << 2) | axis;
 
 	return edgeIdentifier;
+}
+
+Vertex getVertex(uint64_t vertexPosition,
+				uint32_t edgeReference,
+				float voxelSizeX, 
+				float voxelSizeY, 
+				float voxelSizeZ)
+{
+	Vertex v;
+
+	int direction = vertexPosition & 0x3;
+
+	v.x = (static_cast<float>((vertexPosition >> 30) & 0x3fff) + (direction == 0 ? 0.5f : 0.0f)) * voxelSizeX;
+	v.y = (static_cast<float>((vertexPosition >> 16) & 0x3fff) + (direction == 1 ? 0.5f : 0.0f)) * voxelSizeY;
+	v.z = (static_cast<float>((vertexPosition >> 2) & 0x3fff) + (direction == 2 ? 0.5f : 0.0f)) * voxelSizeZ;
+
+	v.halfEdgeRef = edgeReference;
+
+	return v;
 }
 
 Vec3 computeNormal(const Vec3& v1, const Vec3& v2, const Vec3& v3) {
