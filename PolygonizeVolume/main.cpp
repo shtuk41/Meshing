@@ -25,7 +25,7 @@ struct Triangle
 #pragma pack(pop)
 
 void writeMeshToStl(const std::string& stlFileName, mesh& meshToStore);
-uint64_t getVertexPosition(int x, int y, int z, int edge);
+uint64_t getVertexPosition(uint64_t x, uint64_t y, uint64_t z, uint64_t edge);
 
 struct Vertex
 {
@@ -80,7 +80,7 @@ int main()
 
 	//size_t dstIdx = x + width * (y + height * z);
 
-	std::vector<unsigned char> buffer = {0,0,0,0,0,0,0,0,0,
+	/*std::vector<unsigned char> buffer = {0,0,0,0,0,0,0,0,0,
 										0,0,0,0,255,0,0,0,0,
 										0,0,0,0,0,0,0,0,0};
 
@@ -88,9 +88,93 @@ int main()
 	const int height = 3;
 	const int depth = 3;
 
-	const float voxSizeX = 5; 
-	const float voxSizeY = 5; 
+	std::vector<unsigned char> buffer = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+										  0,0,0,0,0,255,255,0, 0,0,0,0,0,0,0,0,
+										  0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0, 
+									      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+	const int width = 4;
+	const int height = 4;
+	const int depth = 4;*/
+
+
+	/*std::vector<unsigned char> buffer(22 * 22 * 22, 0);
+
+	int N = 22;
+	double cx = 11.0;
+	double cy = 11.0;
+	double cz = 11.0;
+	double R = 6.0;
+	double r = 3.0;
+
+	for (int z = 0; z < N; ++z)
+	{
+		for (int y = 0; y < N; ++y)
+		{
+			for (int x = 0; x < N; ++x)
+			{
+				double dx = x - cx;
+				double dy = y - cy;
+				double dz = z - cz;
+
+				double q = std::sqrt(dx * dx + dy * dy) - R;
+				double torus = q * q + dz * dz;
+
+				if (torus <= r * r)
+					buffer[z * N * N + y * N + x] = 255;
+			}
+		}
+	}*/
+
+	int NX = 32;
+	int NY = 22;
+	int NZ = 22;
+
+	std::vector<unsigned char> buffer(NX * NY * NZ, 0);
+
+	double cy = 11.0;
+	double cz = 11.0;
+
+	double R = 6.0;
+	double r = 3.0;
+
+	double cx1 = 10.0;
+	double cx2 = 20.0;
+
+	for (int z = 0; z < NZ; ++z)
+	{
+		for (int y = 0; y < NY; ++y)
+		{
+			for (int x = 0; x < NX; ++x)
+			{
+				double dy = y - cy;
+				double dz = z - cz;
+
+				// Torus 1
+				double dx1 = x - cx1;
+				double q1 = std::sqrt(dx1 * dx1 + dy * dy) - R;
+				double t1 = q1 * q1 + dz * dz;
+
+				// Torus 2
+				double dx2 = x - cx2;
+				double q2 = std::sqrt(dx2 * dx2 + dy * dy) - R;
+				double t2 = q2 * q2 + dz * dz;
+
+				if (t1 <= r * r || t2 <= r * r)
+					buffer[z * NX * NY + y * NX + x] = 255;
+			}
+		}
+	}
+
+
+	const int width = NX;
+	const int height = NY;
+	const int depth = 22; 
+
+	const float voxSizeX = 5;
+	const float voxSizeY = 5;
 	const float voxSizeZ = 5; 
+
 
 	//const float voxSizeX = static_cast<float>(header->voxSizeX);
 	//const float voxSizeY = static_cast<float>(header->voxSizeY);
@@ -229,6 +313,11 @@ int main()
 						else
 						{
 							hid1 = halfEdgeCounter++;
+
+#ifdef DEBUG_PRINT
+							std::cout << "Case 1: " <<  halfedge1Key << "," << hid1 << "," << vid1 << "," << vid2 << std::endl;
+#endif
+
 							halfEdgeMap.insert({ halfedge1Key , hid1});
 
 							uint64_t halfedge1KeyOpposite = ((uint64_t)vid2 << 32) | vid1;
@@ -242,7 +331,7 @@ int main()
 								edge1.oppositeHalfEdgeRef = oppositeId;
 							}
 
-							halfEdges.push_back(edge1);
+							//halfEdges.push_back(edge1);
 
 							if (vertices[vid2].halfEdgeRef == 0xffffffff)
 							{
@@ -288,6 +377,10 @@ int main()
 						else
 						{
 							hid2 = halfEdgeCounter++;
+
+#ifdef DEBUG_PRINT
+							std::cout << "Case 2: " << halfedge2Key << "," << hid2 << "," << vid2 << "," << vid3 << std::endl;
+#endif
 							halfEdgeMap.insert({ halfedge2Key , hid2 });
 
 							uint64_t halfedge2KeyOpposite = ((uint64_t)vid3 << 32) | vid2;
@@ -301,7 +394,7 @@ int main()
 								edge2.oppositeHalfEdgeRef = oppositeId;
 							}
 							
-							halfEdges.push_back(edge2);
+							//halfEdges.push_back(edge2);
 
 							if (vertices[vid3].halfEdgeRef == 0xffffffff)
 							{
@@ -334,7 +427,7 @@ int main()
 								edge3.oppositeHalfEdgeRef = oppositeId;
 							}
 
-							halfEdges.push_back(edge3);
+							//halfEdges.push_back(edge3);
 
 							if (vertices[vid1].halfEdgeRef == 0xffffffff)
 							{
@@ -379,7 +472,7 @@ int main()
 	return 0;
 }
 
-uint64_t getVertexPosition(int x, int y, int z, int edge)
+uint64_t getVertexPosition(uint64_t x, uint64_t y, uint64_t z, uint64_t edge)
 {
 	int axis;
 

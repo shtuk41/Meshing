@@ -76,7 +76,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 		count++;
 	}
 
-#ifdef _DEBUG
+#ifdef _DEBUG_PRINT
 	if (cornerSet != 255)
 	{
 		std::cout << "set: 0b" << std::bitset<8>(cornerSet) << '\n';
