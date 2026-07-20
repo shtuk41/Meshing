@@ -13,6 +13,7 @@ find_package(glm CONFIG REQUIRED)
 find_package(GLEW CONFIG REQUIRED)
 
 add_subdirectory(MarchingCubes)
+add_subdirectory(PolygonizeVolume)
 
 
 
