@@ -31,7 +31,7 @@ Cube::~Cube()
 
 void Cube::Setup()
 {
-    program_id = LoadShaders(".\\cube.vert", ".\\cube.frag");
+    program_id = LoadShaders(".\\shaders\\cube.vert", ".\\shaders\\cube.frag");
 
     float length = edgeLength / 2;
 

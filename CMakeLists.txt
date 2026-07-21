@@ -1,5 +1,14 @@
 cmake_minimum_required(VERSION 3.16)
 
+
+option(BUILD_TESTING "Build the test suite" ON)
+
+if(BUILD_TESTING)
+    set(VCPKG_MANIFEST_FEATURES "tests" CACHE STRING "" FORCE)
+else()
+    set(VCPKG_MANIFEST_FEATURES "" CACHE STRING "" FORCE)
+endif()
+
 #VCPGK
 
 set(CMAKE_TOOLCHAIN_FILE "C:/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
@@ -15,6 +24,10 @@ find_package(GLEW CONFIG REQUIRED)
 add_subdirectory(MarchingCubes)
 add_subdirectory(PolygonizeVolume)
 
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(MarchingCubes.Test)
+endif()
 
 
 

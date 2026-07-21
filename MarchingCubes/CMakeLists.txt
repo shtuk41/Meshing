@@ -1,15 +1,15 @@
 
 
-add_library(MarchingCubes STATIC
+add_library(MarchingCubesLib STATIC
 	MarchingCubes.cpp
 	MarchingCubes.h
 )
 
-target_include_directories(MarchingCubes PRIVATE 
+target_include_directories(MarchingCubesLib PRIVATE 
 	${CMAKE_SOURCE_DIR}/MarchingCubes
 )
 
-set_target_properties(MarchingCubes PROPERTIES
+set_target_properties(MarchingCubesLib PROPERTIES
     # Executables
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/x64/$<CONFIG>"
     
