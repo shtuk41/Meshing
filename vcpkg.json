@@ -1,0 +1,18 @@
+{
+  "name": "my-project-dependencies",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "glew",
+    "glfw3",
+    "glm"
+  ],
+  "builtin-baseline": "ba9f458e205e02484b22de95132730525186b0ce",
+  "features": {
+    "tests": {
+      "description": "Build GoogleTest suite",
+      "dependencies": [
+        "gtest"
+      ]
+    }
+  }
+}
