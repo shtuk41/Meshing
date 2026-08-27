@@ -1,4 +1,7 @@
+
+#ifdef _WIN32
 #include <pch.h>
+#endif
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <cube.h>
@@ -31,7 +34,11 @@ Cube::~Cube()
 
 void Cube::Setup()
 {
+#ifdef _WIN32    
     program_id = LoadShaders(".\\shaders\\cube.vert", ".\\shaders\\cube.frag");
+#elif defined(__linux__)
+    program_id = LoadShaders("./shaders/cube.vert", "./shaders/cube.frag");
+#endif
 
     float length = edgeLength / 2;
 

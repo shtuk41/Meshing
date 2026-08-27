@@ -1,8 +1,11 @@
 // PolygonizeVolume.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <cmath>
+#include <cstdint>
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -307,7 +310,7 @@ int main()
 
 						if (hem != halfEdgeMap.end())
 						{
-							throw std::exception("halfedge exists");
+							throw std::runtime_error("halfedge exists");
 							
 						}
 						else
@@ -371,7 +374,7 @@ int main()
 
 						if (hem != halfEdgeMap.end())
 						{
-							throw std::exception("halfedge exists");
+							throw std::runtime_error("halfedge exists");
 
 						}
 						else
@@ -408,7 +411,7 @@ int main()
 
 						if (hem != halfEdgeMap.end())
 						{
-							throw std::exception("halfedge exists");
+							throw std::runtime_error("halfedge exists");
 
 						}
 						else
@@ -527,7 +530,7 @@ uint64_t getVertexPosition(uint64_t x, uint64_t y, uint64_t z, uint64_t edge)
  			axis = 2; 
 			break;
 		default:
-			throw std::exception("edge is undefined");
+			throw std::runtime_error("edge is undefined");
 	}
 
 	uint64_t edgeIdentifier =  (x << 30) | (y << 16) | (z << 2) | axis;

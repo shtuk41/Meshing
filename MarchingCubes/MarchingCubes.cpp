@@ -6,7 +6,8 @@
 #include <bitset>
 #endif
 
-
+#include <exception>
+#include <stdexcept>
 
 #include <MarchingCubes.h>
 
@@ -58,7 +59,7 @@ mesh getTriangles(const std::vector<std::pair<std::array<float, 3>, unsigned sho
 {
 	if (cell.size() != 8)
 	{
-		throw std::exception("cell must consist of 8 points");
+		throw std::runtime_error("cell must consist of 8 points");
 	}
 
 	mesh trianglesArray;

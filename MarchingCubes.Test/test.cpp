@@ -1,4 +1,13 @@
-#include "pch.h"
+#include <array>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+#include <utility>
+
+
+
+#include <gtest/gtest.h>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -119,7 +128,7 @@ protected:
         {
             glfwTerminate();
 
-            throw std::exception("create window failed");
+            throw std::runtime_error("create window failed");
         }
 
         glfwMakeContextCurrent(g_window);
@@ -177,16 +186,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase1)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(corner == 0 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(corner == 1 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(corner == 2 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(corner == 3 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(corner == 4 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(corner == 5 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(corner == 6 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(corner == 7 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(corner == 0 ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(corner == 1 ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(corner == 2 ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(corner == 3 ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(corner == 4 ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(corner == 5 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(corner == 6 ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(corner == 7 ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -279,16 +288,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase1)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(corner,{  1,2,3,4,5,6,7,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(corner,{  0,  2,3,4,5,6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(corner,{0,1,  3,4,5,6,7}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(corner,{ 0,1,2,  4,5,6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(corner,{  0,1,2,3,  5,6,7}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(corner,{   0,1,2,3,4,  6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(corner,{ 0,1,2,3,4,5,  7,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(corner,{ 0, 1,2,3,4,5,6,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(corner,{  1,2,3,4,5,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(corner,{  0,  2,3,4,5,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(corner,{0,1,  3,4,5,6,7}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(corner,{ 0,1,2,  4,5,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(corner,{  0,1,2,3,  5,6,7}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(corner,{   0,1,2,3,4,  6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(corner,{ 0,1,2,3,4,5,  7,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(corner,{ 0, 1,2,3,4,5,6,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -380,16 +389,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase2)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(pair == 0 || pair == 3 || pair == 8 ? 1500 : 0)});
-        cell.push_back({ {half,-half,half}, unsigned short(pair == 0 || pair == 1 || pair == 9 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(pair == 2 || pair == 3 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(pair == 1 || pair == 2  || pair == 10 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(pair == 4 || pair == 7 || pair == 8? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(pair == 4 || pair == 5 || pair == 9 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(pair == 6 || pair == 7 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(pair == 5 || pair == 6 || pair == 10 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(pair == 0 || pair == 3 || pair == 8 ? 1500 : 0)});
+        cell.push_back({ {half,-half,half}, (unsigned short)(pair == 0 || pair == 1 || pair == 9 ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(pair == 2 || pair == 3 || pair == 11 ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(pair == 1 || pair == 2  || pair == 10 ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(pair == 4 || pair == 7 || pair == 8? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(pair == 4 || pair == 5 || pair == 9 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(pair == 6 || pair == 7 || pair == 11 ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(pair == 5 || pair == 6 || pair == 10 ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -481,16 +490,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase2)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair,{  1,2,  4,5,6,7,  9,10,11}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(pair,  {    2,3,4,5,6,7,8,  10,11}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair,{0,1,    4,5,6,7,8,9,10   }) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair, {0,    3,4,5,6,7,8,9,   11}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,  {0,1,2,3,  5,6,    9,10,11}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(pair,   {0,1,2,3,    6,7,8,  10,11}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair, {0,1,2,3,4,5,    8,9,10   }) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,  {0,1,2,3,4,    7,8,9,   11}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(pair,{  1,2,  4,5,6,7,  9,10,11}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(pair,  {    2,3,4,5,6,7,8,  10,11}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(pair,{0,1,    4,5,6,7,8,9,10   }) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(pair, {0,    3,4,5,6,7,8,9,   11}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(pair,  {0,1,2,3,  5,6,    9,10,11}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(pair,   {0,1,2,3,    6,7,8,  10,11}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(pair, {0,1,2,3,4,5,    8,9,10   }) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(pair,  {0,1,2,3,4,    7,8,9,   11}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -582,16 +591,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase3)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(pair == 0 || pair == 6 || pair == 10 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(pair == 1 || pair == 2 || pair == 11? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(pair == 4 || pair == 7 || pair == 11 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(pair == 3 || pair == 5 || pair == 10 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(pair == 1 || pair == 7 || pair == 9 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(pair == 0 || pair == 3 || pair == 8 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(pair == 5 || pair == 6 || pair == 8? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(pair == 2 || pair == 4 || pair == 9 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(pair == 0 || pair == 6 || pair == 10 ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(pair == 1 || pair == 2 || pair == 11? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(pair == 4 || pair == 7 || pair == 11 ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(pair == 3 || pair == 5 || pair == 10 ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(pair == 1 || pair == 7 || pair == 9 ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(pair == 0 || pair == 3 || pair == 8 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(pair == 5 || pair == 6 || pair == 8? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(pair == 2 || pair == 4 || pair == 9 ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -683,16 +692,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase3)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair, {  1,2,3,4,5,  7,8,9,   11}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(pair,   {0,    3,4,5,6,7,8,9,10}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair, {0,1,2,3,  5,6,  8,9,10}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,  {0,1,2,  4,  6,7,8,9,   11}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,   {0,  2,3,4,5,6,  8,  10,11}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(pair,    {  1,2,  4,5,6,7,  9,10,11}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,  {0,1,2,3,4,    7,  9,10,11}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,   {0,1,  3,  5,6,7,8,  10,11}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(pair, {  1,2,3,4,5,  7,8,9,   11}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(pair,   {0,    3,4,5,6,7,8,9,10}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(pair, {0,1,2,3,  5,6,  8,9,10}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(pair,  {0,1,2,  4,  6,7,8,9,   11}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(pair,   {0,  2,3,4,5,6,  8,  10,11}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(pair,    {  1,2,  4,5,6,7,  9,10,11}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(pair,  {0,1,2,3,4,    7,  9,10,11}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(pair,   {0,1,  3,  5,6,7,8,  10,11}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -785,16 +794,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase4)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(pair == 0 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(pair == 1 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(pair == 2 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(pair == 3 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(pair == 3 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(pair == 2 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(pair == 1 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(pair == 0? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(pair == 0 ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(pair == 1 ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(pair == 2 ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(pair == 3 ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(pair == 3 ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(pair == 2 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(pair == 1 ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(pair == 0? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -887,16 +896,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase4)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair, {  1,2,3,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(pair,   {0,  2,3,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair, {0,1,  3,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,  {0,1,2,  }) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,   {0,1,2,  }) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(pair,    {0,1,  3,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,  {0,  2,3,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,   {  1,2,3,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(pair, {  1,2,3,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(pair,   {0,  2,3,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(pair, {0,1,  3,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(pair,  {0,1,2,  }) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(pair,   {0,1,2,  }) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(pair,    {0,1,  3,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(pair,  {0,  2,3,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(pair,   {  1,2,3,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -989,16 +998,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase5)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair,{0, 2, 3, 8, 10, 11,16,17,19,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(pair, {0,1,3,12,14,15,16,17,18,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair,{1,2,3,8,9,11,20,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,{0,1,2,12,13,15,20,21,23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,{4,6,7,9,10,11,16,18,19,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(pair,{4,5,7,13,14,15,17,18,19,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,{5,6,7,8,9,10,21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,{4,5,6,12,13,14,20,21,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(pair,{0, 2, 3, 8, 10, 11,16,17,19,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(pair, {0,1,3,12,14,15,16,17,18,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(pair,{1,2,3,8,9,11,20,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(pair,{0,1,2,12,13,15,20,21,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(pair,{4,6,7,9,10,11,16,18,19,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(pair,{4,5,7,13,14,15,17,18,19,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(pair,{5,6,7,8,9,10,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(pair,{4,5,6,12,13,14,20,21,22,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1091,16 +1100,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase5)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(pair,{        4,5,6,7,0,8,9,10,11,12,         16,         20,21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(pair, {         1,5,      8,9,10,11,12,13,14,15,   17,      20,21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(pair,{1,2,3,  4,5,6,7,0,8,           13,            18,   20,21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(pair,{ 1,2,3,  4,  6,      9,      12,13,14,15,         19,20,21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(pair,{      3,    5,6,7,0,8,9,10,11,      14,   16,17,18,19,20}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(pair,{       2,        7,  8,9,10,11,12,13,14,15,16,17,18,19,   21}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(pair,{ 1,2,3,  4,5,6,7,0,    10,            15,16,17,18,19,      22}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(pair,{  1,2,3,  4,      0,       11,12,13,14,15,16,17,18,19,         23}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(pair,{        4,5,6,7,0,8,9,10,11,12,         16,         20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(pair, {         1,5,      8,9,10,11,12,13,14,15,   17,      20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(pair,{1,2,3,  4,5,6,7,0,8,           13,            18,   20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(pair,{ 1,2,3,  4,  6,      9,      12,13,14,15,         19,20,21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(pair,{      3,    5,6,7,0,8,9,10,11,      14,   16,17,18,19,20}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(pair,{       2,        7,  8,9,10,11,12,13,14,15,16,17,18,19,   21}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(pair,{ 1,2,3,  4,5,6,7,0,    10,            15,16,17,18,19,      22}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(pair,{  1,2,3,  4,      0,       11,12,13,14,15,16,17,18,19,         23}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1194,16 +1203,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase6)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1,6,7,10,12,18,22,23}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {0,1,2,3,13,14,16,17,21,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {4,5,6,7,8,11,17,20,21,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {2,3,4,5,9,15,18,19,22,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {2,4,8,9,14,15,19,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {5,6,8,9,10,11,16,17,20,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0,3,12,13,14,15,16,20,21,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {1,7,10,11,12,13,18,19,23}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {0,1,6,7,10,12,18,22,23}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple, {0,1,2,3,13,14,16,17,21,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {4,5,6,7,8,11,17,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple, {2,3,4,5,9,15,18,19,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple, {2,4,8,9,14,15,19,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple, {5,6,8,9,10,11,16,17,20,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple, {0,3,12,13,14,15,16,20,21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple, {1,7,10,11,12,13,18,19,23}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1296,16 +1305,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase6)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {2, 3, 4, 5, 8, 9, 11, 13, 14, 15, 16, 17, 19, 20, 21}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple,   {4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18, 19, 20, 22, 23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {0, 1, 2, 3, 9, 10, 12, 13, 14, 15, 16, 18, 19, 22, 23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple,  {0, 1, 6, 7, 8, 10, 11, 12, 13, 14, 16, 17, 20, 21, 23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple,   {0, 1, 3, 5, 6, 7, 10, 11, 12, 13, 16, 17, 18, 20, 21,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple,    {0, 1, 2, 3, 4, 7, 12, 13, 14, 15, 18, 19, 21, 22, 23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple,  {1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 22, 23,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple,   {0, 2, 3, 4, 5, 6, 8, 9, 14, 15, 16, 17, 20, 21, 22}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {2, 3, 4, 5, 8, 9, 11, 13, 14, 15, 16, 17, 19, 20, 21}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple,   {4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18, 19, 20, 22, 23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {0, 1, 2, 3, 9, 10, 12, 13, 14, 15, 16, 18, 19, 22, 23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple,  {0, 1, 6, 7, 8, 10, 11, 12, 13, 14, 16, 17, 20, 21, 23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple,   {0, 1, 3, 5, 6, 7, 10, 11, 12, 13, 16, 17, 18, 20, 21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple,    {0, 1, 2, 3, 4, 7, 12, 13, 14, 15, 18, 19, 21, 22, 23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple,  {1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 17, 18, 19, 22, 23,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple,   {0, 2, 3, 4, 5, 6, 8, 9, 14, 15, 16, 17, 20, 21, 22}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1399,16 +1408,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase7)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,1,7,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {2,4,5,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {3,4,5,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {0,6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {2,3,5,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {1,6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0,1,6,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {2,3,4,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {0,1,7,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple, {2,4,5,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {3,4,5,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple, {0,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple, {2,3,5,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple, {1,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple, {0,1,6,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple, {2,3,4,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1501,16 +1510,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestInvertedCase7)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {    2,3,4,5,6,  }) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple,   {0,1,  3,    6,7,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {0,1,2,      6,7,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple,  {  1,2,3,4,5,    }) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple,   {0,1,    4,  6,7,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple,    {0,  2,3,4,5,    }) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple,  {    2,3,4,5,  7,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple,   {0,1,      5,6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {    2,3,4,5,6,  }) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple,   {0,1,  3,    6,7,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {0,1,2,      6,7,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple,  {  1,2,3,4,5,    }) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple,   {0,1,    4,  6,7,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple,    {0,  2,3,4,5,    }) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple,  {    2,3,4,5,  7,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple,   {0,1,      5,6,7,}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1605,16 +1614,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase8)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(quad,{0, 2,  4}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(quad,  {0,   3,4}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(quad,{0, 2,    5}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(quad, {0,   3,  5}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(quad,  {1, 2,  4}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(quad,   {1,   3,4}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(quad, {1, 2,    5}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(quad,  {1,   3,  5}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(quad,{0, 2,  4}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(quad,  {0,   3,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(quad,{0, 2,    5}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(quad, {0,   3,  5}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(quad,  {1, 2,  4}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(quad,   {1,   3,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(quad, {1, 2,    5}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(quad,  {1,   3,  5}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1708,16 +1717,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase9)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(quad == 0 || quad == 1 || quad == 3 || quad == 4 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(quad == 0 || quad == 1 || quad == 2 || quad == 5 ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(quad == 0 || quad == 2 || quad == 3 || quad == 7 ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(quad == 1 || quad == 2 || quad == 3 || quad == 6 ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(quad == 0 || quad == 4 || quad == 5 || quad == 7 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(quad == 1 || quad == 4 || quad == 5 || quad == 6 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(quad == 3 || quad == 4 || quad == 6 || quad == 7 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(quad == 2 || quad == 5 || quad == 6 || quad == 7 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(quad == 0 || quad == 1 || quad == 3 || quad == 4 ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(quad == 0 || quad == 1 || quad == 2 || quad == 5 ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(quad == 0 || quad == 2 || quad == 3 || quad == 7 ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(quad == 1 || quad == 2 || quad == 3 || quad == 6 ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(quad == 0 || quad == 4 || quad == 5 || quad == 7 ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(quad == 1 || quad == 4 || quad == 5 || quad == 6 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(quad == 3 || quad == 4 || quad == 6 || quad == 7 ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(quad == 2 || quad == 5 || quad == 6 || quad == 7 ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1811,16 +1820,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase10)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0,2,5}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {1,2,4}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {1,3,5}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {0,3,4}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {0,3,4}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {1,3,5}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {1,2,4}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {0,2,5}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {0,2,5}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple, {1,2,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {1,3,5}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple, {0,3,4}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple, {0,3,4}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple, {1,3,5}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple, {1,2,4}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple, {0,2,5}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -1914,16 +1923,16 @@ TEST_F(OpenGLTestFixture, DISABLED_Case11_14)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(quad == 0 || quad == 2 || quad == 3 || quad == 4 || quad == 6 || quad == 7 || quad == 10 || quad == 14 || quad == 16 || quad == 19 || quad == 20 || quad == 23 ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(quad == 0 || quad == 1 || quad == 3 || quad == 5 || quad == 6 || quad == 7 || quad == 11 || quad == 13 || quad == 16 || quad == 17 || quad == 22 || quad == 23? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short( quad == 1 || quad == 2 || quad == 3 || quad == 4 || quad == 5 || quad == 7 || quad == 9 || quad == 15 || quad == 18 || quad == 19 || quad == 20 || quad == 21? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(quad == 0 || quad == 1 || quad == 2 || quad == 4 || quad == 5 || quad == 6 || quad == 8 || quad == 12 || quad == 17 || quad == 18 || quad == 21 || quad == 22? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(quad == -1 || quad == 2 || quad == 6 || quad == 8 || quad == 10 || quad == 11 || quad == 12 || quad == 14 || quad == 15 || quad == 18 || quad == 19 || quad == 22 || quad == 23 ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(quad == 3 || quad == 5 || quad == 8 || quad == 9 || quad == 11 || quad == 13 || quad == 14 || quad == 15 || quad == 16 || quad == 19 || quad == 21 || quad == 22 ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(quad == 1 || quad == 7 || quad == 9 || quad == 10 || quad == 11 || quad == 12 || quad == 13 || quad == 15 || quad == 17 || quad == 18 || quad == 20 || quad == 23 ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(quad == 0 || quad == 4 || quad == 8 || quad == 9 || quad == 10 || quad == 12 || quad == 13 || quad == 14 || quad == 16 || quad == 17 || quad == 20 || quad == 21 ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(quad == 0 || quad == 2 || quad == 3 || quad == 4 || quad == 6 || quad == 7 || quad == 10 || quad == 14 || quad == 16 || quad == 19 || quad == 20 || quad == 23 ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(quad == 0 || quad == 1 || quad == 3 || quad == 5 || quad == 6 || quad == 7 || quad == 11 || quad == 13 || quad == 16 || quad == 17 || quad == 22 || quad == 23? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)( quad == 1 || quad == 2 || quad == 3 || quad == 4 || quad == 5 || quad == 7 || quad == 9 || quad == 15 || quad == 18 || quad == 19 || quad == 20 || quad == 21? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(quad == 0 || quad == 1 || quad == 2 || quad == 4 || quad == 5 || quad == 6 || quad == 8 || quad == 12 || quad == 17 || quad == 18 || quad == 21 || quad == 22? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(quad == -1 || quad == 2 || quad == 6 || quad == 8 || quad == 10 || quad == 11 || quad == 12 || quad == 14 || quad == 15 || quad == 18 || quad == 19 || quad == 22 || quad == 23 ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(quad == 3 || quad == 5 || quad == 8 || quad == 9 || quad == 11 || quad == 13 || quad == 14 || quad == 15 || quad == 16 || quad == 19 || quad == 21 || quad == 22 ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(quad == 1 || quad == 7 || quad == 9 || quad == 10 || quad == 11 || quad == 12 || quad == 13 || quad == 15 || quad == 17 || quad == 18 || quad == 20 || quad == 23 ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(quad == 0 || quad == 4 || quad == 8 || quad == 9 || quad == 10 || quad == 12 || quad == 13 || quad == 14 || quad == 16 || quad == 17 || quad == 20 || quad == 21 ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -2018,16 +2027,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase12)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(quad, {0,  2,3,  5,        10,   12,13,   15,   17,      20,   22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(quad,   {0,1,  3,4,  6,7,  9,            14,         18,   20,21,   23,}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(quad, {  1,        6,  8,9,   11,12,13,14,   16,            21,22,23,}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(quad,  {    2,  4,5,  7,8,  10,11,         15,         19,20,21,22,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(quad,   {  1,2,3,4,             11,12,   14,15,16,   18,19,   21,}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(quad,    {0,1,2,    5,6,7,8,           13,      16,17,   19,      22,}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(quad,  {0,            7,8,9,10,      13,14,15,   17,18,19,20}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(quad,   {      3,4,5,6,    9,10,11,12,         16,17,18,            23}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(quad, {0,  2,3,  5,        10,   12,13,   15,   17,      20,   22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(quad,   {0,1,  3,4,  6,7,  9,            14,         18,   20,21,   23,}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(quad, {  1,        6,  8,9,   11,12,13,14,   16,            21,22,23,}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(quad,  {    2,  4,5,  7,8,  10,11,         15,         19,20,21,22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(quad,   {  1,2,3,4,             11,12,   14,15,16,   18,19,   21,}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(quad,    {0,1,2,    5,6,7,8,           13,      16,17,   19,      22,}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(quad,  {0,            7,8,9,10,      13,14,15,   17,18,19,20}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(quad,   {      3,4,5,6,    9,10,11,12,         16,17,18,            23}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
@@ -2121,16 +2130,16 @@ TEST_F(OpenGLTestFixture, DISABLED_TestCase13)
 
     while (!glfwWindowShouldClose(g_window))
     {
-        std::vector<std::pair<std::array<float, 3>, unsigned short>> cell;
+        std::vector<std::pair<std::array<float, 3>, unsigned short> > cell;
 
-        cell.push_back({ {-half,-half, half}, unsigned short(Check(triple, {0}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,half}, unsigned short(Check(triple, {1}) ? 1500 : 0) });
-        cell.push_back({ {-half,-half,-half}, unsigned short(Check(triple, {1}) ? 1500 : 0) });
-        cell.push_back({ {half,-half,-half}, unsigned short(Check(triple, {0}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,half}, unsigned short(Check(triple, {1}) ? 1500 : 0) });
-        cell.push_back({ {half,half,half}, unsigned short(Check(triple, {0}) ? 1500 : 0) });
-        cell.push_back({ {-half,half,-half}, unsigned short(Check(triple, {0}) ? 1500 : 0) });
-        cell.push_back({ {half,half,-half}, unsigned short(Check(triple, {1}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half, half}, (unsigned short)(Check(triple, {0}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,half}, (unsigned short)(Check(triple, {1}) ? 1500 : 0) });
+        cell.push_back({ {-half,-half,-half}, (unsigned short)(Check(triple, {1}) ? 1500 : 0) });
+        cell.push_back({ {half,-half,-half}, (unsigned short)(Check(triple, {0}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,half}, (unsigned short)(Check(triple, {1}) ? 1500 : 0) });
+        cell.push_back({ {half,half,half}, (unsigned short)(Check(triple, {0}) ? 1500 : 0) });
+        cell.push_back({ {-half,half,-half}, (unsigned short)(Check(triple, {0}) ? 1500 : 0) });
+        cell.push_back({ {half,half,-half}, (unsigned short)(Check(triple, {1}) ? 1500 : 0) });
 
         std::pair<unsigned short, unsigned short> innerRange = { 1000,2000 };
 
