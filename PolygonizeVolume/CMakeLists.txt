@@ -1,7 +1,8 @@
-add_library(PolygonizeVolume STATIC
+add_executable(PolygonizeVolume 
 	main.cpp
 	ioData.cpp
 	ioData.h
+	${CMAKE_SOURCE_DIR}/MarchingCubes/MarchingCubes.cpp
 )
 
 target_include_directories(PolygonizeVolume PRIVATE 
@@ -38,6 +39,9 @@ elseif(LINUX)
 	    ARCHIVE_OUTPUT_DIRECTORY         "${CMAKE_BINARY_DIR}/bin"
         ARCHIVE_OUTPUT_DIRECTORY_DEBUG   "${CMAKE_BINARY_DIR}/bin"
         ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY 		 "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY 		 "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY 		 "${CMAKE_BINARY_DIR}/bin"
 	)
 endif()
 

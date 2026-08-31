@@ -64,22 +64,26 @@ unsigned int faceCounter = 0;
 
 int main()
 {
+	
+#ifdef _WIN32	
 	//std::string volumeFile(R"(D:\Files\CTLab\SaveVolumeToFile\volumeHeader.uint16_scv)");
 	//std::string volumeFile(R"(D:\Files\Cesars\Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
-	//std::string volumeFile(R"(D:\Files\Cesars\BostonSci_109134204_F 2025-8-14 11-39-3.uint16_scv)");
+#elif defined  (__linux__)
+	std::string volumeFile(R"(/home/ubi/Volumes/Cesars/Scissors_Test 2025-7-2 15-11-21.uint16_scv)");
+#endif
 
-	//VolumeData vd(volumeFile);
- 	//vd.fillBuffer();
+	VolumeData vd(volumeFile);
+ 	vd.fillBuffer();
 
-	//std::cout << vd.getHeaderString() << std::endl;
+	std::cout << vd.getHeaderString() << std::endl;
 
-	//std::vector<unsigned char> buffer = vd.getVolumeDataTex();
+	std::vector<unsigned char> buffer = vd.getVolumeDataTex();
 
-	//auto header = vd.getHeader();
+	auto header = vd.getHeader();
 
-	//const int width = header->recoX;
-	//const int height = header->recoY;
-	//const int depth = header->recoZ;
+	const int width = header->recoX;
+	const int height = header->recoY;
+	const int depth = header->recoZ;
 
 	//size_t dstIdx = x + width * (y + height * z);
 
@@ -129,7 +133,7 @@ int main()
 		}
 	}*/
 
-	int NX = 32;
+	/*int NX = 32;
 	int NY = 22;
 	int NZ = 22;
 
@@ -176,12 +180,12 @@ int main()
 
 	const float voxSizeX = 5;
 	const float voxSizeY = 5;
-	const float voxSizeZ = 5; 
+	const float voxSizeZ = 5; */
 
 
-	//const float voxSizeX = static_cast<float>(header->voxSizeX);
-	//const float voxSizeY = static_cast<float>(header->voxSizeY);
-	//const float voxSizeZ = static_cast<float>(header->voxSizeZ);
+	const float voxSizeX = static_cast<float>(header->voxSizeX);
+	const float voxSizeY = static_cast<float>(header->voxSizeY);
+	const float voxSizeZ = static_cast<float>(header->voxSizeZ);
 
 	unsigned int bufferSize = static_cast<unsigned int>(buffer.size());
 
@@ -233,8 +237,8 @@ int main()
 				cell.push_back({ aindex6, usIndex6 });
 				cell.push_back({ aindex7, usIndex7 });
 
-				std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
-				//std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
+				//std::pair<unsigned short, unsigned short> innerRange = { 100,300 };
+				std::pair<unsigned short, unsigned short> innerRange = { 100,120 };
 				int cornerSet{ 0 };
 
 				std::vector<int> edges;
